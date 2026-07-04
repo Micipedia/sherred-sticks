@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sherred & Sons — Walking Sticks
 
-## Getting Started
+A storefront for **Sherred & Sons Walking Sticks** — handmade walking sticks,
+traditional Irish blackthorn shillelaghs, dinner canes and support sticks.
 
-First, run the development server:
+> ⚠️ **This is an early preview.** Every product on the site is a **sample**
+> (with a drawn illustration, not a real photo) so the look and feel can be
+> reviewed before launch. No payments are taken and no orders are placed yet.
+
+**Live preview:** https://micipedia.github.io/sherred-sticks/
+
+---
+
+## What it looks like
+
+- Dark, traditional, Celtic-flavoured theme (aged charcoal, Celtic gold, a
+  triquetra mark and divider).
+- Four categories: **Hiking**, **Dinner**, **Aid**, and **Robust & Traditional**.
+- Home page, per-category pages, product pages, a working basket, and a
+  demo checkout.
+- Prices in **GBP (£)**.
+
+## Tech
+
+- [Next.js 16](https://nextjs.org) (App Router) + React 19 + TypeScript
+- Tailwind CSS v4
+- Static export (`output: "export"`) — no server required, hosts anywhere
+- Deployed automatically to GitHub Pages via `.github/workflows/deploy.yml`
+
+## Run it on your own machine
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build the static site (output lands in `out/`):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Where the content lives
 
-## Learn More
+Everything a shopkeeper would change is in one file:
 
-To learn more about Next.js, take a look at the following resources:
+- **Products & categories:** `src/lib/products.ts`
+  (name, price in pence, wood, handle style, description, which are "featured").
+- **Colours & fonts:** `src/app/globals.css` (the `@theme` block at the top).
+- **Page wording:** `src/app/*/page.tsx` (home, about, contact, etc.).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The sample stick pictures are drawn from the wood colour + handle style by
+`src/lib/stick-svg.ts`. To preview them as an image: `node qa/render.mjs`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## The road to a real shop
 
-## Deploy on Vercel
+The site is built so the pieces slot in without a rewrite:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. **Domain** — register `sherredsticks.com` (keep it in the shop owner's own
+   account for ownership).
+2. **Payments** — create a **Stripe** account *in the shop owner's name* (that
+   is where the money lands). Products, prices, photos, stock and orders are all
+   managed from the Stripe dashboard — no code needed to add a stick.
+3. **Swap sample data → Stripe** — replace the static `products.ts` with a read
+   from the Stripe catalogue, and switch the demo checkout to real Stripe
+   Checkout (this needs a small server, so we move hosting off static Pages at
+   that point).
+4. **Photography** — swap the drawn illustrations for real product photos.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+Built as a favour, mate. 🍀
