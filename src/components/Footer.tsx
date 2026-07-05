@@ -11,12 +11,17 @@ export default function Footer() {
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
         <div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={asset("/brand/sherred-and-sons.png")}
-            alt="Sherred & Sons Walking Sticks"
-            className="h-16 w-auto rounded-sm"
-          />
+          <div className="flex items-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset("/brand/crest.png")}
+              alt="Sherred & Sons crest"
+              className="h-14 w-auto"
+            />
+            <span className="font-display text-2xl leading-none tracking-wide text-parchment">
+              Sherred <span className="text-gold">&amp;</span> Sons
+            </span>
+          </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
             Handmade walking sticks and traditional Irish blackthorn, shaped the
             old way and finished by hand.
