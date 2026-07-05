@@ -29,10 +29,15 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y -qq libheif-examples
       - name: Optimize product photos (convert HEIC + shrink big phone uploads)
         run: node scripts/optimize-images.mjs
+      - name: Build the checkout price list (store.json)
+        run: node scripts/emit-store.mjs
       - name: Build static export
         # Served from the apex custom domain https://sherredsticks.com/ (root path),
         # so NEXT_PUBLIC_BASE_PATH is left empty. public/CNAME sets the custom domain.
         run: npm run build
+        env:
+          # The checkout backend (Cloudflare Worker) the basket posts to.
+          NEXT_PUBLIC_CHECKOUT_URL: https://sherred-checkout.sherred-sons.workers.dev
       - name: Disable Jekyll (so _next/ assets are served)
         run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3

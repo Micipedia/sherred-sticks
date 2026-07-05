@@ -42,3 +42,6 @@ next-env.d.ts
 
 # qa artifacts (rendered previews)
 qa/*.png
+
+# Generated at build by scripts/emit-store.mjs
+public/store.json

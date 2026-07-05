@@ -1,0 +1,11 @@
+# Checkout backend for the shop. Deploy with:  npx wrangler deploy
+# Set the Stripe key with:  npx wrangler secret put STRIPE_SECRET_KEY
+name = "sherred-checkout"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+workers_dev = true
+
+# Flat delivery charge in pence added at checkout (0 = no delivery charge).
+# Change and redeploy to adjust.
+[vars]
+SHIPPING_CENTS = "0"

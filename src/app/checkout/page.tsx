@@ -4,31 +4,36 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { asset } from "@/lib/asset";
-import { IconCheck } from "@/components/Icons";
 import { formatPrice } from "@/lib/product-helpers";
 import { btnGhost, btnPrimary } from "@/lib/ui";
 
-export default function CheckoutPage() {
-  const { lines, subtotalCents, count, clear, hydrated } = useCart();
-  const [placed, setPlaced] = useState(false);
+const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL;
 
-  // Order-placed confirmation (demo only).
-  if (placed) {
-    return (
-      <div className="container-page flex flex-col items-center py-28 text-center">
-        <span className="flex h-16 w-16 items-center justify-center rounded-full border border-gold text-gold">
-          <IconCheck className="h-8 w-8" />
-        </span>
-        <h1 className="mt-6 font-display text-3xl text-parchment">Thank you</h1>
-        <p className="mt-4 max-w-md text-muted">
-          This was a preview — no payment was taken and no order was placed. In
-          the live shop, this is where a secure card payment would complete.
-        </p>
-        <Link href="/shop" className={`${btnPrimary} mt-8`}>
-          Back to the shop
-        </Link>
-      </div>
-    );
+export default function CheckoutPage() {
+  const { lines, subtotalCents, count, hydrated } = useCart();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function pay() {
+    if (!CHECKOUT_URL) {
+      setError("Checkout isn't quite ready yet. Please try again soon.");
+      return;
+    }
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch(CHECKOUT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: lines.map((l) => ({ slug: l.slug, qty: l.qty })) }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.url) throw new Error(data.error || "Something went wrong.");
+      window.location.href = data.url;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Something went wrong. Please try again.");
+      setBusy(false);
+    }
   }
 
   if (!hydrated) {
@@ -59,18 +64,6 @@ export default function CheckoutPage() {
       </header>
 
       <div className="mx-auto mt-10 max-w-2xl">
-        {/* Preview notice */}
-        <div className="mb-8 rounded-sm border border-gold/40 bg-gold/5 p-5 text-sm leading-relaxed text-parchment-dim">
-          <span className="font-display uppercase tracking-[0.14em] text-gold">
-            Preview store
-          </span>
-          <p className="mt-2">
-            No payment is taken here. In the live shop, Checkout takes you to a
-            secure card payment powered by Stripe, with delivery details
-            collected on the way.
-          </p>
-        </div>
-
         {/* Order summary */}
         <ul className="divide-y divide-line rounded-sm border border-line">
           {lines.map((l) => (
@@ -99,24 +92,32 @@ export default function CheckoutPage() {
           </span>
         </div>
         <p className="mt-1 text-right text-xs text-muted">
-          Shipping calculated before payment.
+          Delivery details are collected on the secure payment page.
         </p>
+
+        {error && (
+          <p className="mt-6 rounded-sm border border-oxblood/50 bg-oxblood/10 p-3 text-sm text-oxblood">
+            {error}
+          </p>
+        )}
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row-reverse">
           <button
             type="button"
-            onClick={() => {
-              setPlaced(true);
-              clear();
-            }}
-            className={`${btnPrimary} flex-1`}
+            onClick={pay}
+            disabled={busy}
+            className={`${btnPrimary} flex-1 disabled:opacity-60`}
           >
-            Place order (demo)
+            {busy ? "Starting secure checkout…" : "Pay securely"}
           </button>
           <Link href="/shop" className={`${btnGhost} flex-1`}>
             Continue shopping
           </Link>
         </div>
+
+        <p className="mt-4 text-center text-xs text-muted">
+          You&apos;ll be taken to a secure payment page powered by Stripe.
+        </p>
       </div>
     </div>
   );
