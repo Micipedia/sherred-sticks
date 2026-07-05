@@ -16,9 +16,13 @@ import path from "node:path";
 import { execFileSync } from "node:child_process";
 import sharp from "sharp";
 
-const PRODUCTS_DIR = path.join(process.cwd(), "public/products");
+const MEDIA_DIRS = [
+  path.join(process.cwd(), "public/products"),
+  path.join(process.cwd(), "public/accessories"),
+];
 const DATA_DIRS = [
   path.join(process.cwd(), "src/data/products"),
+  path.join(process.cwd(), "src/data/accessories"),
   path.join(process.cwd(), "src/data/content"),
 ];
 const MAX_WIDTH = 1400;
@@ -46,7 +50,7 @@ try {
 
 // --- Phase 1: HEIC/HEIF -> JPG, and rewrite the photo paths that referenced them
 const renames = []; // [oldPublicRef, newPublicRef]
-for (const file of walk(PRODUCTS_DIR)) {
+for (const file of MEDIA_DIRS.flatMap(walk)) {
   if (!HEIC_EXTS.has(path.extname(file).toLowerCase())) continue;
   const jpg = file.replace(/\.(heic|heif)$/i, ".jpg");
   const oldRef = "/" + path.relative(path.join(process.cwd(), "public"), file).split(path.sep).join("/");
@@ -97,7 +101,7 @@ if (renames.length) {
 // --- Phase 2: shrink oversized JPG/PNG/WEBP in place
 let optimized = 0;
 let untouched = 0;
-for (const file of walk(PRODUCTS_DIR)) {
+for (const file of MEDIA_DIRS.flatMap(walk)) {
   if (!RESIZE_EXTS.has(path.extname(file).toLowerCase())) continue;
   const before = fs.statSync(file).size;
   const meta = await sharp(file).metadata().catch(() => null);

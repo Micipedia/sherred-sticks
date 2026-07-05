@@ -10,6 +10,12 @@ media:
     output: /products
     extensions: [jpg, jpeg, png, webp, avif, heic, heif, JPG, JPEG, PNG, WEBP, HEIC, HEIF]
     categories: [image]
+  - name: accessory-images
+    label: Accessory photos
+    input: public/accessories
+    output: /accessories
+    extensions: [jpg, jpeg, png, webp, avif, heic, heif, JPG, JPEG, PNG, WEBP, HEIC, HEIF]
+    categories: [image]
 
 content:
   - name: products
@@ -63,6 +69,39 @@ content:
         list: true
         options:
           media: product-images
+
+  - name: accessories
+    label: Accessories
+    type: collection
+    path: src/data/accessories
+    format: json
+    filename: '{fields.name}.json'
+    view:
+      fields: [name, priceCents, available]
+    fields:
+      - name: name
+        label: Name
+        type: string
+        required: true
+      - name: priceCents
+        label: Price in pence — e.g. 800 for £8.00
+        type: number
+      - name: available
+        label: In stock
+        type: boolean
+        default: true
+      - name: shortDescription
+        label: Short description (shown on the card)
+        type: text
+      - name: description
+        label: Full description
+        type: text
+      - name: photos
+        label: Photos (first is the main)
+        type: image
+        list: true
+        options:
+          media: accessory-images
 
   - name: home
     label: Homepage wording

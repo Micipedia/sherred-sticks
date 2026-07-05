@@ -42,6 +42,20 @@ export interface Product {
   buyUrl?: string;
 }
 
+/** A non-stick item for sale (stick wax, polishing cloth, etc.). */
+export interface Accessory {
+  slug: string;
+  name: string;
+  /** Price in pence. */
+  priceCents?: number;
+  /** In stock and buyable. */
+  available: boolean;
+  shortDescription: string;
+  description: string;
+  /** Photo paths (first is the main), stored without the deploy base path. */
+  photos: string[];
+}
+
 export interface CartLine {
   slug: string;
   name: string;

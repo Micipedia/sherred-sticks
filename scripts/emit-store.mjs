@@ -1,25 +1,37 @@
 // Emit public/store.json — the trusted price list the checkout Worker reads to
-// build a Stripe payment. Regenerated on every deploy from the stick data, so it
-// always reflects the current prices/availability the owner set in the editor.
+// build a Stripe payment. Regenerated on every deploy from the stick + accessory
+// data, so it always reflects the current prices/availability set in the editor.
 // Runs AFTER optimize-images.mjs so any HEIC photo paths are already .jpg.
 
 import fs from "node:fs";
 import path from "node:path";
 
-const dir = path.join(process.cwd(), "src/data/products");
-const store = fs
-  .readdirSync(dir)
-  .filter((f) => f.endsWith(".json"))
-  .map((f) => {
-    const d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
-    return {
-      slug: f.replace(/\.json$/, ""),
-      name: d.name,
-      priceCents: d.priceCents ?? null,
-      sold: Boolean(d.sold),
-      image: (d.photos && d.photos[0]) || null,
-    };
-  });
+function readDir(rel, mapper) {
+  const dir = path.join(process.cwd(), rel);
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => mapper(f.replace(/\.json$/, ""), JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"))));
+}
 
+const sticks = readDir("src/data/products", (slug, d) => ({
+  slug,
+  name: d.name,
+  priceCents: d.priceCents ?? null,
+  sold: Boolean(d.sold),
+  image: (d.photos && d.photos[0]) || null,
+}));
+
+const accessories = readDir("src/data/accessories", (slug, d) => ({
+  slug,
+  name: d.name,
+  priceCents: d.priceCents ?? null,
+  // "sold" here means "not buyable" — reuse the same flag the Worker checks.
+  sold: !d.available,
+  image: (d.photos && d.photos[0]) || null,
+}));
+
+const store = [...sticks, ...accessories];
 fs.writeFileSync(path.join(process.cwd(), "public/store.json"), JSON.stringify(store));
-console.log(`wrote public/store.json (${store.length} sticks)`);
+console.log(`wrote public/store.json (${sticks.length} sticks, ${accessories.length} accessories)`);

@@ -22,6 +22,10 @@ interface CartContextValue {
   open: () => void;
   close: () => void;
   add: (product: Product, qty?: number) => void;
+  addLine: (
+    line: { slug: string; name: string; priceCents: number; image: string },
+    qty?: number
+  ) => void;
   setQty: (slug: string, qty: number) => void;
   remove: (slug: string) => void;
   clear: () => void;
@@ -58,27 +62,39 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [lines, hydrated]);
 
-  const add = useCallback((product: Product, qty = 1) => {
-    setLines((prev) => {
-      const i = prev.findIndex((l) => l.slug === product.slug);
-      if (i >= 0) {
-        const next = [...prev];
-        next[i] = { ...next[i], qty: next[i].qty + qty };
-        return next;
-      }
-      return [
-        ...prev,
+  // Generic add — works for any purchasable item (sticks or accessories).
+  const addLine = useCallback(
+    (
+      line: { slug: string; name: string; priceCents: number; image: string },
+      qty = 1
+    ) => {
+      setLines((prev) => {
+        const i = prev.findIndex((l) => l.slug === line.slug);
+        if (i >= 0) {
+          const next = [...prev];
+          next[i] = { ...next[i], qty: next[i].qty + qty };
+          return next;
+        }
+        return [...prev, { ...line, qty }];
+      });
+      setIsOpen(true);
+    },
+    []
+  );
+
+  const add = useCallback(
+    (product: Product, qty = 1) =>
+      addLine(
         {
           slug: product.slug,
           name: product.name,
           priceCents: product.priceCents ?? 0,
           image: mainImage(product),
-          qty,
         },
-      ];
-    });
-    setIsOpen(true);
-  }, []);
+        qty
+      ),
+    [addLine]
+  );
 
   const setQty = useCallback((slug: string, qty: number) => {
     setLines((prev) =>
@@ -111,11 +127,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       open: () => setIsOpen(true),
       close: () => setIsOpen(false),
       add,
+      addLine,
       setQty,
       remove,
       clear,
     }),
-    [lines, count, subtotalCents, isOpen, hydrated, add, setQty, remove, clear]
+    [lines, count, subtotalCents, isOpen, hydrated, add, addLine, setQty, remove, clear]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
