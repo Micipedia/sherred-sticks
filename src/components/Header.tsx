@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCart } from "./CartProvider";
-import BrandMark from "./BrandMark";
+import { asset } from "@/lib/asset";
 import { IconCart, IconMenu, IconClose } from "./Icons";
 
 const NAV = [
@@ -29,16 +29,17 @@ export default function Header() {
     <header className="sticky top-0 z-30 border-b border-line bg-ink/90 backdrop-blur">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3" aria-label="Sherred & Sons home">
-          <BrandMark className="h-9 w-9 shrink-0 text-gold" />
-          <span className="flex flex-col leading-none">
-            <span className="font-display text-lg tracking-wide text-parchment">
-              Sherred &amp; Sons
-            </span>
-            <span className="mt-0.5 text-[0.6rem] uppercase tracking-[0.32em] text-muted">
-              Walking Sticks
-            </span>
-          </span>
+        <Link
+          href="/"
+          className="flex items-center"
+          aria-label="Sherred & Sons Walking Sticks — home"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset("/brand/sherred-and-sons.png")}
+            alt="Sherred & Sons Walking Sticks"
+            className="h-11 w-auto rounded-sm"
+          />
         </Link>
 
         {/* Desktop nav */}

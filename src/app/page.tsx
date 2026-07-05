@@ -11,6 +11,7 @@ import {
   IconTruck,
 } from "@/components/Icons";
 import { CATEGORIES, PRODUCTS, featuredProducts, getProduct } from "@/lib/products";
+import { asset } from "@/lib/asset";
 import { btnGhost, btnPrimary } from "@/lib/ui";
 
 const TRUST = [
@@ -21,7 +22,6 @@ const TRUST = [
 ];
 
 export default function HomePage() {
-  const hero = getProduct("blackthorn-shillelagh") ?? PRODUCTS[0];
   const storyStick = getProduct("tipperary-bata") ?? PRODUCTS[0];
 
   return (
@@ -50,16 +50,15 @@ export default function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-sm border border-line bg-gradient-to-b from-surface-2 to-ink hairline">
-              <StickImage
-                woodColor={hero.woodColor}
-                handle={hero.handle}
-                className="h-full w-full"
+            <div className="mx-auto max-w-md overflow-hidden rounded-md border border-line hairline">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={asset("/brand/sherred-and-sons.png")}
+                alt="Sherred & Sons Walking Sticks"
+                width={1400}
+                height={763}
+                className="h-auto w-full"
               />
-            </div>
-            <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-sm border border-line bg-ink/80 px-4 py-2 text-center backdrop-blur">
-              <p className="font-display text-sm text-parchment">{hero.name}</p>
-              <p className="text-xs text-muted">Sample illustration</p>
             </div>
           </div>
         </div>

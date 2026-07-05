@@ -1,5 +1,5 @@
 import Link from "next/link";
-import BrandMark from "./BrandMark";
+import { asset } from "@/lib/asset";
 import { CATEGORIES } from "@/lib/products";
 
 const PAYMENTS = ["Visa", "Mastercard", "Amex", "Apple Pay", "PayPal"];
@@ -11,10 +11,12 @@ export default function Footer() {
       <div className="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
         <div>
-          <div className="flex items-center gap-3">
-            <BrandMark className="h-8 w-8 text-gold" />
-            <span className="font-display text-lg text-parchment">Sherred &amp; Sons</span>
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset("/brand/sherred-and-sons.png")}
+            alt="Sherred & Sons Walking Sticks"
+            className="h-16 w-auto rounded-sm"
+          />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
             Handmade walking sticks and traditional Irish blackthorn, shaped the
             old way and finished by hand.
