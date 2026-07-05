@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CelticDivider from "@/components/CelticDivider";
 import ContactForm from "@/components/ContactForm";
+import contact from "@/data/content/contact.json";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -15,8 +16,7 @@ export default function ContactPage() {
         <p className="eyebrow">Get in touch</p>
         <h1 className="mt-3 font-display text-4xl text-parchment">Contact</h1>
         <p className="mt-6 text-lg leading-relaxed text-parchment-dim">
-          Questions about a stick, a size, or a custom order? Send us a message
-          and we will get back to you.
+          {contact.intro}
         </p>
       </header>
 
@@ -32,29 +32,25 @@ export default function ContactPage() {
         {/* Info */}
         <div className="space-y-6 lg:col-span-2">
           <div id="delivery" className="scroll-mt-24 rounded-sm border border-line bg-surface p-6 hairline">
-            <h2 className="font-display text-lg text-gold">Delivery &amp; returns</h2>
+            <h2 className="font-display text-lg text-gold">{contact.deliveryHeading}</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              Sticks are made to order, boxed carefully and sent tracked. Full
-              delivery times and our returns policy will be confirmed before the
-              shop opens.
+              {contact.deliveryText}
             </p>
           </div>
           <div id="sizing" className="scroll-mt-24 rounded-sm border border-line bg-surface p-6 hairline">
-            <h2 className="font-display text-lg text-gold">Sizing your stick</h2>
+            <h2 className="font-display text-lg text-gold">{contact.sizingHeading}</h2>
             <p className="mt-3 text-sm leading-relaxed text-muted">
-              For a support cane: stand upright in your usual shoes, arms
-              relaxed, and measure from the floor to the crease of your wrist.
-              That length is a good starting point — tell us your height and we
-              will help.
+              {contact.sizingText}
             </p>
           </div>
         </div>
       </div>
 
-      <p className="mx-auto mt-12 max-w-xl text-center text-xs text-muted">
-        This is a preview site. The contact form is not yet connected to a live
-        inbox — messages will start being delivered once the shop goes live.
-      </p>
+      {contact.footnote && (
+        <p className="mx-auto mt-12 max-w-xl text-center text-xs text-muted">
+          {contact.footnote}
+        </p>
+      )}
     </div>
   );
 }

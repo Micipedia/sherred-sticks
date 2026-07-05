@@ -13,6 +13,7 @@ import {
 import { CATEGORIES, PRODUCTS, featuredProducts, getProduct } from "@/lib/products";
 import { asset } from "@/lib/asset";
 import { btnGhost, btnPrimary } from "@/lib/ui";
+import home from "@/data/content/home.json";
 
 const TRUST = [
   { icon: IconChisel, title: "Hand-shaped", note: "Every stick worked by hand" },
@@ -30,13 +31,12 @@ export default function HomePage() {
       <section className="relative overflow-hidden border-b border-line">
         <div className="container-page grid items-center gap-10 py-16 md:py-24 lg:grid-cols-2">
           <div>
-            <p className="eyebrow">Handmade in the British Isles</p>
+            <p className="eyebrow">{home.heroEyebrow}</p>
             <h1 className="mt-4 font-display text-4xl leading-[1.1] text-parchment sm:text-5xl">
-              Walking sticks &amp; shillelaghs, made the old way
+              {home.heroHeading}
             </h1>
             <p className="mt-5 max-w-md text-lg leading-relaxed text-parchment-dim">
-              Seasoned hardwood, hand-shaped handles and a finish rubbed back by
-              hand. Sticks to walk with, to lean on, and to pass down.
+              {home.heroSubheading}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/shop" className={btnPrimary}>
@@ -121,20 +121,18 @@ export default function HomePage() {
       <section className="container-page py-16">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div className="order-2 lg:order-1">
-            <p className="eyebrow">Our craft</p>
+            <p className="eyebrow">{home.storyEyebrow}</p>
             <h2 className="mt-3 font-display text-3xl text-parchment">
-              A stick with a story in the grain
+              {home.storyHeading}
             </h2>
-            <p className="mt-5 leading-relaxed text-parchment-dim">
-              Every Sherred stick begins as a length of hardwood, chosen for its
-              straightness and character, then seasoned slowly until it is hard
-              and true. The handle is shaped by hand, the shaft rubbed back and
-              oiled, and a brass ferrule fitted for the road.
-            </p>
-            <p className="mt-4 leading-relaxed text-parchment-dim">
-              No two are ever quite alike — the knots, the colour and the curve
-              of each stick are its own.
-            </p>
+            {home.storyBody.map((para, i) => (
+              <p
+                key={i}
+                className={`${i === 0 ? "mt-5" : "mt-4"} leading-relaxed text-parchment-dim`}
+              >
+                {para}
+              </p>
+            ))}
             <Link href="/about" className={`${btnGhost} mt-8`}>
               Read our story
               <IconArrow className="h-4 w-4" />
@@ -152,11 +150,9 @@ export default function HomePage() {
       <section className="border-t border-line bg-gradient-to-b from-surface to-ink py-16">
         <div className="container-page text-center">
           <h2 className="font-display text-3xl text-parchment">
-            Ready to find your stick?
+            {home.ctaHeading}
           </h2>
-          <p className="mt-3 text-muted">
-            Hiking staffs, dress canes, support sticks and traditional blackthorn.
-          </p>
+          <p className="mt-3 text-muted">{home.ctaText}</p>
           <div className="mt-8 flex justify-center">
             <Link href="/shop" className={btnPrimary}>
               Shop all sticks

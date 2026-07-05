@@ -63,3 +63,87 @@ content:
         list: true
         options:
           media: product-images
+
+  - name: home
+    label: Homepage wording
+    type: file
+    path: src/data/content/home.json
+    format: json
+    fields:
+      - name: heroEyebrow
+        label: Top line (small, above the big heading)
+        type: string
+      - name: heroHeading
+        label: Big headline
+        type: text
+      - name: heroSubheading
+        label: Intro sentence under the headline
+        type: text
+      - name: storyEyebrow
+        label: 'Story section: small top line'
+        type: string
+      - name: storyHeading
+        label: 'Story section: heading'
+        type: text
+      - name: storyBody
+        label: 'Story section: paragraphs (one box per paragraph)'
+        type: text
+        list: true
+      - name: ctaHeading
+        label: 'Bottom banner: heading'
+        type: text
+      - name: ctaText
+        label: 'Bottom banner: line underneath'
+        type: text
+
+  - name: about
+    label: About page
+    type: file
+    path: src/data/content/about.json
+    format: json
+    fields:
+      - name: intro
+        label: Opening sentence (under the title)
+        type: text
+      - name: body
+        label: Main paragraphs (one box per paragraph)
+        type: text
+        list: true
+      - name: stepsHeading
+        label: 'Making section: heading'
+        type: string
+      - name: steps
+        label: How we make them (four steps)
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Step title, type: string }
+          - { name: text, label: Step text, type: text }
+      - name: notice
+        label: Notice box (leave empty to hide it)
+        type: text
+
+  - name: contact
+    label: Contact page
+    type: file
+    path: src/data/content/contact.json
+    format: json
+    fields:
+      - name: intro
+        label: Opening sentence (under the title)
+        type: text
+      - name: deliveryHeading
+        label: 'Delivery box: heading'
+        type: string
+      - name: deliveryText
+        label: 'Delivery box: text'
+        type: text
+      - name: sizingHeading
+        label: 'Sizing box: heading'
+        type: string
+      - name: sizingText
+        label: 'Sizing box: text'
+        type: text
+      - name: footnote
+        label: Small note at the bottom (leave empty to hide it)
+        type: text
