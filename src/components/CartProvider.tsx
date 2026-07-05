@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import type { CartLine, Product } from "@/lib/types";
+import { mainImage } from "@/lib/products";
 
 const STORAGE_KEY = "sherred-cart-v1";
 
@@ -70,10 +71,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         {
           slug: product.slug,
           name: product.name,
-          priceCents: product.priceCents,
-          wood: product.wood,
-          woodColor: product.woodColor,
-          handle: product.handle,
+          priceCents: product.priceCents ?? 0,
+          image: mainImage(product),
           qty,
         },
       ];

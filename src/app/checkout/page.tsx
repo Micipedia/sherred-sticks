@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
-import StickImage from "@/components/StickImage";
+import { asset } from "@/lib/asset";
 import { IconCheck } from "@/components/Icons";
 import { formatPrice } from "@/lib/products";
 import { btnGhost, btnPrimary } from "@/lib/ui";
@@ -75,12 +75,12 @@ export default function CheckoutPage() {
         <ul className="divide-y divide-line rounded-sm border border-line">
           {lines.map((l) => (
             <li key={l.slug} className="flex items-center gap-4 p-4">
-              <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-surface">
-                <StickImage woodColor={l.woodColor} handle={l.handle} className="h-full w-full" />
+              <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-ink">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={asset(l.image)} alt={l.name} className="h-full w-full object-cover" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="truncate font-display text-parchment">{l.name}</p>
-                <p className="text-sm text-muted">{l.wood}</p>
                 <p className="text-sm text-muted">Qty {l.qty}</p>
               </div>
               <span className="tabular-nums text-gold">

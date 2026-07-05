@@ -6,200 +6,224 @@ export const CATEGORIES: Category[] = [
     name: "Hiking Sticks",
     tagline: "For the trail, the hills and the long road.",
     blurb:
-      "Light, strong and honest — thumbsticks and staffs cut for the walker who covers ground. Seasoned hardwood with a grip that warms to the hand.",
+      "Light, strong and honest — staffs and walking sticks cut for the walker who covers ground.",
   },
   {
     slug: "dinner",
     name: "Dinner Sticks",
     tagline: "A dress cane for an evening out.",
     blurb:
-      "Slim, well-mannered canes finished to a soft sheen. The kind of stick that finishes an outfit rather than steadies a step.",
+      "Decorative, well-finished canes — the kind of stick that finishes an outfit rather than steadies a step.",
   },
   {
     slug: "aid",
     name: "Aid Sticks",
     tagline: "Steady, comfortable support for every day.",
     blurb:
-      "Balanced walking aids with kind handles and a sure brass ferrule. Made to be leaned on, morning to night.",
+      "Balanced walking aids with kind, curved handles — made to be leaned on and easy to hold.",
   },
   {
     slug: "robust",
     name: "Robust & Traditional",
-    tagline: "Classic Irish blackthorn, built to last a lifetime.",
+    tagline: "Classic knobbed sticks, built to last a lifetime.",
     blurb:
-      "The traditional Irish blackthorn — knotted, heavy in the hand and cured the old way. A stick with generations of history behind it.",
+      "The traditional knobbed walking stick — a hand-polished root or burl head on a sturdy shaft, full of character.",
   },
 ];
 
 export const PRODUCTS: Product[] = [
-  // ── Hiking ─────────────────────────────────────────────
   {
-    slug: "wicklow-thumbstick",
-    name: "The Wicklow Thumbstick",
-    category: "hiking",
-    priceCents: 5900,
-    wood: "Irish Hazel",
-    woodColor: "#8a5a2b",
-    handle: "thumb",
-    lengthCm: 130,
-    shortDescription: "A tall hazel thumbstick for open hill and forest track.",
-    description:
-      "Cut from straight-grown Irish hazel and seasoned slowly, the Wicklow is a proper hill companion. The natural fork sits the thumb just so, giving an easy, upright carry over long miles. Finished in oil and tipped with a hardened brass ferrule for grip on wet rock.",
-    featured: true,
-  },
-  {
-    slug: "glendalough-trekker",
-    name: "The Glendalough Trekker",
-    category: "hiking",
-    priceCents: 6500,
-    wood: "Seasoned Ash",
-    woodColor: "#c9a97a",
-    handle: "straight",
-    lengthCm: 120,
-    shortDescription: "A springy ash walking staff with a warm hand-worn top.",
-    description:
-      "Ash has been the walker's timber for centuries — light, springy and forgiving underfoot. The Glendalough is shaped for a natural swing and rubbed back to a soft, hand-worn finish. A dependable everyday stick for the trail.",
-  },
-  {
-    slug: "mourne-summit-staff",
-    name: "The Mourne Summit Staff",
-    category: "hiking",
-    priceCents: 7200,
-    wood: "Sweet Chestnut",
-    woodColor: "#5a3418",
-    handle: "straight",
-    lengthCm: 140,
-    shortDescription: "A long chestnut staff for the tops and the boggy ground.",
-    description:
-      "A full-length staff in rich sweet chestnut, built for the high, broken ground of the Mournes. Extra reach for stream crossings and steep descents, with a deep-oiled finish that shrugs off the weather.",
-    featured: true,
-  },
-
-  // ── Dinner ─────────────────────────────────────────────
-  {
-    slug: "dublin-gentleman",
-    name: "The Dublin Gentleman",
-    category: "dinner",
-    priceCents: 9500,
-    wood: "Irish Blackthorn",
-    woodColor: "#2b1d14",
-    handle: "derby",
-    lengthCm: 92,
-    shortDescription: "A slim blackthorn dress cane with a shaped derby handle.",
-    description:
-      "A dress cane in the old Dublin style — slender seasoned blackthorn with the natural thorns dressed back and polished dark. The shaped derby handle sits comfortably in the palm, and a slim brass collar sets off the finish. Made to be seen.",
-    featured: true,
-  },
-  {
-    slug: "grafton-dress-cane",
-    name: "The Grafton Dress Cane",
-    category: "dinner",
-    priceCents: 11500,
-    wood: "Ebonised Hardwood",
-    woodColor: "#1c1712",
-    handle: "derby",
-    lengthCm: 92,
-    shortDescription: "A near-black dress cane with a high, formal polish.",
-    description:
-      "Our most formal cane. Close-grained hardwood ebonised to a deep near-black and brought to a high, even polish, with a fitted brass collar. Understated, correct and quietly handsome — an evening cane in the truest sense.",
-  },
-  {
-    slug: "claddagh-evening-cane",
-    name: "The Claddagh Evening Cane",
-    category: "dinner",
-    priceCents: 8900,
-    wood: "Irish Oak",
-    woodColor: "#6b4423",
-    handle: "crook",
-    lengthCm: 92,
-    shortDescription: "A warm oak cane with a gentle crook handle.",
-    description:
-      "Warm Irish oak with a soft crook handle, rubbed to show the honey of the grain. A little less formal than a derby — an easy, elegant cane for the theatre or a long dinner.",
-  },
-
-  // ── Aid ────────────────────────────────────────────────
-  {
-    slug: "liffey-support-cane",
-    name: "The Liffey Support Cane",
-    category: "aid",
-    priceCents: 4900,
-    wood: "Steamed Beech",
-    woodColor: "#b08a5a",
-    handle: "derby",
-    lengthCm: 90,
-    shortDescription: "A comfortable, balanced everyday support cane.",
-    description:
-      "A kind, everyday walking aid. Steamed beech gives a smooth, warm shaft; the full derby handle spreads the load across the palm for all-day comfort. A wide, non-slip ferrule keeps it sure on tile and pavement alike.",
-    featured: true,
-  },
-  {
-    slug: "shannon-comfort-cane",
-    name: "The Shannon Comfort Cane",
-    category: "aid",
-    priceCents: 5500,
-    wood: "Seasoned Ash",
-    woodColor: "#c9a97a",
-    handle: "derby",
-    lengthCm: 88,
-    shortDescription: "A light ash cane with a softened palm-fit handle.",
-    description:
-      "Light in the hand and easy to carry, the Shannon pairs a springy ash shaft with a softened derby handle that fills the palm. A dependable aid for those who are on and off their feet all day.",
-  },
-  {
-    slug: "kerry-steadfast",
-    name: "The Kerry Steadfast",
-    category: "aid",
-    priceCents: 5900,
-    wood: "Irish Oak",
-    woodColor: "#6b4423",
-    handle: "crook",
-    lengthCm: 90,
-    shortDescription: "A sturdy oak cane with a reassuring crook.",
-    description:
-      "Solid Irish oak with a generous crook handle you can hook over an arm or a chair-back. A little heavier and reassuringly firm — the Steadfast earns its name.",
-  },
-
-  // ── Robust & Traditional ───────────────────────────────
-  {
-    slug: "blackthorn-shillelagh",
-    name: "The Blackthorn Shillelagh",
+    slug: "stick-1",
+    name: "The Burl Crown",
     category: "robust",
-    priceCents: 7900,
-    wood: "Irish Blackthorn",
-    woodColor: "#2b1d14",
-    handle: "knob",
-    lengthCm: 95,
-    shortDescription: "The classic knobbed blackthorn, cured the old way.",
+    detail: "Root-knob walking stick",
+    photos: 5,
+    sold: true,
+    shortDescription: "A hefty root-knob stick with a deep, glossy head.",
     description:
-      "The stick that started it all. A single length of Irish blackthorn with its natural root-knob left as the head, cured slowly and rubbed with oil to the traditional deep brown. Knotted, heavy and honest — a walking stick with generations of history in the grain.",
-    featured: true,
+      "A substantial hand-finished walking stick, its natural root knob polished to a warm, deep shine. A classic knobbed piece with real weight in the hand.",
   },
   {
-    slug: "tipperary-bata",
-    name: "The Tipperary Bata",
+    slug: "stick-2",
+    name: "Honeyed Burl Knob",
     category: "robust",
-    priceCents: 9900,
-    wood: "Aged Blackthorn",
-    woodColor: "#241811",
-    handle: "knob",
-    lengthCm: 98,
-    shortDescription: "A heavier heritage blackthorn in the traditional bata length.",
-    description:
-      "A nod to the old Irish walking stick — the bata — kept to its traditional length and heft. Chosen from thick, well-knotted blackthorn and aged until the timber is hard and dark. A substantial, characterful stick for the collector and the long-distance walker alike.",
+    detail: "Figured burl knob",
+    photos: 5,
+    sold: true,
     featured: true,
+    shortDescription: "A large amber burl head with beautiful figured grain.",
+    description:
+      "One of the finest heads in the collection — a big amber burl knob full of figure, brought to a glass-smooth polish.",
   },
   {
-    slug: "connemara-blackthorn",
-    name: "The Connemara Blackthorn",
+    slug: "stick-3",
+    name: "Amber Shillelagh",
     category: "robust",
-    priceCents: 8500,
-    wood: "Irish Blackthorn",
-    woodColor: "#2b1d14",
-    handle: "knob",
-    lengthCm: 96,
-    shortDescription: "A characterful west-of-Ireland blackthorn with a strong knob.",
+    detail: "Knobbed shillelagh",
+    photos: 5,
+    sold: true,
+    featured: true,
+    shortDescription: "A classic knobbed shillelagh with a rich amber head.",
     description:
-      "Grown slow and hard in the west, this blackthorn carries the twists and thorns of its weather. The root-knob makes a firm, natural grip, and the whole stick is oiled to bring out the deep colour of the bark. No two are ever quite alike.",
+      "A traditional knobbed shillelagh with a glossy amber crown and a straight, sturdy shaft.",
+  },
+  {
+    slug: "stick-4",
+    name: "The Golden Knob",
+    category: "robust",
+    detail: "Root-knob walking stick",
+    photos: 5,
+    sold: true,
+    shortDescription: "A smooth, rounded knob in warm honey tones.",
+    description:
+      "A neatly rounded root knob finished in warm honey colour, comfortable and full in the palm.",
+  },
+  {
+    slug: "stick-5",
+    name: "The Natural Burl",
+    category: "robust",
+    detail: "Part-natural knob",
+    photos: 5,
+    sold: true,
+    shortDescription: "A characterful knob left part-natural, bark and burl intact.",
+    description:
+      "A rugged root knob left partly in its natural state, with bark and burl texture kept for character.",
+  },
+  {
+    slug: "stick-6",
+    name: "The Dark Knob",
+    category: "robust",
+    detail: "Dark-finished knob",
+    photos: 5,
+    sold: true,
+    shortDescription: "A boldly dark-finished knob stick.",
+    description:
+      "A striking walking stick finished in deep, near-black tones, with a bold knobbed head.",
+  },
+  {
+    slug: "stick-7",
+    name: "The Ram's Horn Crook",
+    category: "aid",
+    detail: "Curved crook handle",
+    photos: 5,
+    sold: true,
+    featured: true,
+    shortDescription: "An elegant curved crook in pale, figured wood.",
+    description:
+      "A gracefully curved crook handle in pale figured wood — easy to hook over an arm or a chair-back.",
+  },
+  {
+    slug: "stick-8",
+    name: "The Carved Crown",
+    category: "robust",
+    detail: "Hand-carved head",
+    photos: 5,
+    sold: true,
+    shortDescription: "A knob stick with a hand-carved head.",
+    description:
+      "A knobbed stick with a hand-worked, carved head and plenty of natural character.",
+  },
+  {
+    slug: "stick-9",
+    name: "The Midnight Knob",
+    category: "robust",
+    detail: "Dark knob stick",
+    photos: 5,
+    sold: true,
+    shortDescription: "A dark, glossy knob with a substantial head.",
+    description:
+      "A dark-toned knob stick with a full, glossy head and a solid, dependable feel.",
+  },
+  {
+    slug: "stick-10",
+    name: "The Long Staff",
+    category: "hiking",
+    detail: "Full-length staff",
+    photos: 5,
+    sold: true,
+    featured: true,
+    shortDescription: "A full-length straight walking staff for the trail.",
+    description:
+      "A tall, straight staff with a smooth seasoned shaft — a proper companion for open ground.",
+  },
+  {
+    slug: "stick-11",
+    name: "Amber Knob & Shaft",
+    category: "robust",
+    detail: "Knob-topped walking stick",
+    photos: 5,
+    sold: true,
+    shortDescription: "A round, polished knob on a straight seasoned shaft.",
+    description:
+      "A rounded amber knob set on a clean, straight shaft — a handsome everyday walking stick.",
+  },
+  {
+    slug: "stick-12",
+    name: "The Patterned Cane",
+    category: "dinner",
+    detail: "Decorative-shaft cane",
+    photos: 5,
+    sold: true,
+    shortDescription: "A knob-topped cane with a decorative, textured shaft.",
+    description:
+      "A knob-topped cane finished with a decorative, patterned shaft — a little more dressed-up than the rest.",
+  },
+  {
+    slug: "stick-13",
+    name: "The Onyx Knob",
+    category: "robust",
+    detail: "Dark knob stick",
+    photos: 5,
+    sold: true,
+    shortDescription: "A dark knob on a dark, slender shaft.",
+    description:
+      "A neat dark-headed knob stick on a slim, dark shaft — understated and smart.",
+  },
+  {
+    slug: "stick-14",
+    name: "The Field Staff",
+    category: "hiking",
+    detail: "Full-length staff",
+    photos: 5,
+    sold: true,
+    shortDescription: "A long, straight field staff.",
+    description:
+      "A simple, honest full-length staff for hill and field — light, strong and ready to walk.",
+  },
+  {
+    slug: "stick-15",
+    name: "The Spiral Cane",
+    category: "dinner",
+    detail: "Carved spiral shaft",
+    photos: 5,
+    sold: true,
+    featured: true,
+    shortDescription: "A knob stick with a hand-carved spiralled shaft.",
+    description:
+      "A knobbed stick with a beautifully hand-carved spiral running the length of the shaft — a real eye-catcher.",
+  },
+  {
+    slug: "stick-16",
+    name: "The Grand Burl",
+    category: "robust",
+    detail: "Grand burl knob",
+    photos: 5,
+    sold: true,
+    featured: true,
+    shortDescription: "A grand, glossy burl knob — a real statement piece.",
+    description:
+      "The showpiece of the collection: a large, glossy burl knob with wonderful figure, polished to a mirror finish.",
+  },
+  {
+    slug: "stick-17",
+    name: "The Shepherd's Crook",
+    category: "aid",
+    detail: "Crook-handled cane",
+    photos: 4,
+    sold: true,
+    shortDescription: "A dark crook-handled cane, hooked and ready.",
+    description:
+      "A dark, hooked crook-handled cane — comfortable to hold and easy to hang over an arm or a rail.",
   },
 ];
 
@@ -211,6 +235,19 @@ const GBP = new Intl.NumberFormat("en-GB", {
 /** cents == pence here; money is stored as integers to avoid float bugs. */
 export function formatPrice(cents: number): string {
   return GBP.format(cents / 100);
+}
+
+/** Main (hero) photo for a product. */
+export function mainImage(p: Product): string {
+  return `/products/${p.slug}/01.jpg`;
+}
+
+/** All photo paths for a product's gallery. */
+export function productImages(p: Product): string[] {
+  return Array.from(
+    { length: p.photos },
+    (_, k) => `/products/${p.slug}/${String(k + 1).padStart(2, "0")}.jpg`
+  );
 }
 
 export function getCategory(slug: string): Category | undefined {
@@ -228,11 +265,3 @@ export function productsByCategory(slug: CategorySlug): Product[] {
 export function featuredProducts(): Product[] {
   return PRODUCTS.filter((p) => p.featured);
 }
-
-export const HANDLE_LABEL: Record<string, string> = {
-  knob: "Natural root knob",
-  derby: "Shaped derby handle",
-  crook: "Curved crook handle",
-  thumb: "Natural thumb fork",
-  straight: "Straight top",
-};

@@ -9,29 +9,38 @@ export interface Category {
   blurb: string;
 }
 
+export interface StickSpec {
+  length?: string;
+  head?: string;
+  shaft?: string;
+  ferrule?: string;
+  tip?: string;
+  polish?: string;
+  features?: string;
+}
+
 export interface Product {
   slug: string;
   name: string;
   category: CategorySlug;
-  /** Price in cents (EUR) to avoid floating-point money bugs. */
-  priceCents: number;
-  /** Display name of the timber, e.g. "Irish Blackthorn". */
-  wood: string;
-  /** Hex colour used to render the sample illustration. */
-  woodColor: string;
-  handle: HandleStyle;
-  lengthCm: number;
+  /** Short descriptor shown under the name (form / character, not a price). */
+  detail: string;
+  /** Number of photos in /public/products/<slug>/NN.jpg (01.jpg is the main). */
+  photos: number;
+  sold: boolean;
   shortDescription: string;
   description: string;
   featured?: boolean;
+  /** Price in pence. Omitted for sold pieces. */
+  priceCents?: number;
+  /** Optional structured spec (maps to Steve's intake sheet fields). */
+  spec?: StickSpec;
 }
 
 export interface CartLine {
   slug: string;
   name: string;
   priceCents: number;
-  wood: string;
-  woodColor: string;
-  handle: HandleStyle;
+  image: string;
   qty: number;
 }

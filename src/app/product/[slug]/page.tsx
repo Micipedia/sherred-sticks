@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import StickImage from "@/components/StickImage";
-import AddToCartButton from "@/components/AddToCartButton";
+import ProductImage from "@/components/ProductImage";
 import ProductCard from "@/components/ProductCard";
+import AddToCartButton from "@/components/AddToCartButton";
 import CelticDivider from "@/components/CelticDivider";
 import {
-  HANDLE_LABEL,
   PRODUCTS,
   formatPrice,
   getCategory,
   getProduct,
+  productImages,
   productsByCategory,
 } from "@/lib/products";
 
@@ -43,16 +43,25 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const category = getCategory(product.category);
+  const images = productImages(product);
   const related = productsByCategory(product.category)
     .filter((p) => p.slug !== product.slug)
     .slice(0, 3);
 
-  const specs = [
-    { label: "Timber", value: product.wood },
-    { label: "Handle", value: HANDLE_LABEL[product.handle] },
-    { label: "Length", value: `${product.lengthCm} cm` },
-    { label: "Finish", value: "Hand-oiled, brass ferrule" },
-  ];
+  const spec = product.spec;
+  const specRows = (
+    spec
+      ? [
+          ["Length", spec.length],
+          ["Head", spec.head],
+          ["Shaft", spec.shaft],
+          ["Ferrule", spec.ferrule],
+          ["Tip", spec.tip],
+          ["Polish", spec.polish],
+          ["Features", spec.features],
+        ]
+      : []
+  ).filter((row): row is [string, string] => Boolean(row[1]));
 
   return (
     <div className="container-page py-14">
@@ -73,18 +82,37 @@ export default async function ProductPage({
       </nav>
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
-        {/* Image */}
+        {/* Images */}
         <div>
-          <div className="aspect-[4/5] overflow-hidden rounded-sm border border-line bg-gradient-to-b from-surface-2 to-ink hairline">
-            <StickImage
-              woodColor={product.woodColor}
-              handle={product.handle}
-              className="h-full w-full"
+          <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-line bg-ink">
+            <ProductImage
+              product={product}
+              src={images[0]}
+              priority
+              className="h-full w-full object-contain"
             />
+            {product.sold && (
+              <span className="absolute left-4 top-4 rounded-sm bg-ink/85 px-3 py-1 font-display text-xs uppercase tracking-[0.18em] text-gold backdrop-blur">
+                Sold
+              </span>
+            )}
           </div>
-          <p className="mt-3 text-center text-xs text-muted">
-            Sample illustration — product photography to come.
-          </p>
+          {images.length > 1 && (
+            <div className="mt-3 grid grid-cols-4 gap-3">
+              {images.slice(1).map((img) => (
+                <div
+                  key={img}
+                  className="aspect-square overflow-hidden rounded-sm border border-line bg-ink"
+                >
+                  <ProductImage
+                    product={product}
+                    src={img}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Details */}
@@ -100,40 +128,62 @@ export default async function ProductPage({
           <h1 className="mt-3 font-display text-3xl leading-tight text-parchment sm:text-4xl">
             {product.name}
           </h1>
-          <p className="mt-4 text-2xl tabular-nums text-gold">
-            {formatPrice(product.priceCents)}
-          </p>
-          <p className="mt-5 text-lg leading-relaxed text-parchment-dim">
+          <p className="mt-2 text-muted">{product.detail}</p>
+
+          <p className="mt-6 text-lg leading-relaxed text-parchment-dim">
             {product.shortDescription}
           </p>
-
-          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-line py-6">
-            {specs.map((s) => (
-              <div key={s.label}>
-                <dt className="text-xs uppercase tracking-[0.14em] text-muted">
-                  {s.label}
-                </dt>
-                <dd className="mt-1 text-parchment">{s.value}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-8">
-            <AddToCartButton
-              product={product}
-              label="Add to basket"
-              className="w-full !px-8 !py-3.5 !text-sm sm:w-auto"
-            />
-          </div>
-
-          <div className="mt-6 space-y-2 text-sm text-muted">
-            <p>Made to order and finished by hand — please allow time for crafting.</p>
-            <p>Every stick is unique; grain, colour and knots will vary.</p>
-          </div>
-
-          <div className="mt-8 leading-relaxed text-parchment-dim">
+          <div className="mt-4 leading-relaxed text-parchment-dim">
             {product.description}
           </div>
+
+          {specRows.length > 0 && (
+            <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-y border-line py-6">
+              {specRows.map(([label, value]) => (
+                <div key={label}>
+                  <dt className="text-xs uppercase tracking-[0.14em] text-muted">
+                    {label}
+                  </dt>
+                  <dd className="mt-1 text-parchment">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {/* Purchase / sold state */}
+          {product.sold ? (
+            <div className="mt-8 rounded-sm border border-gold/40 bg-gold/5 p-5">
+              <p className="font-display text-sm uppercase tracking-[0.18em] text-gold">
+                Sold
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-parchment-dim">
+                This one has found its home. Every stick is one of a kind and made
+                by hand — {" "}
+                <Link href="/contact" className="text-gold hover:text-gold-bright">
+                  get in touch
+                </Link>{" "}
+                about a similar piece.
+              </p>
+            </div>
+          ) : (
+            <div className="mt-8">
+              {product.priceCents != null && (
+                <p className="mb-4 text-2xl tabular-nums text-gold">
+                  {formatPrice(product.priceCents)}
+                </p>
+              )}
+              <AddToCartButton
+                product={product}
+                label="Add to basket"
+                className="w-full !px-8 !py-3.5 !text-sm sm:w-auto"
+              />
+            </div>
+          )}
+
+          <p className="mt-6 text-sm text-muted">
+            Handmade and one of a kind — grain, colour and character vary from
+            stick to stick.
+          </p>
         </div>
       </div>
 

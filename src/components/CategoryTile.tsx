@@ -1,5 +1,5 @@
 import Link from "next/link";
-import StickImage from "./StickImage";
+import ProductImage from "./ProductImage";
 import { productsByCategory } from "@/lib/products";
 import type { Category } from "@/lib/types";
 import { IconArrow } from "./Icons";
@@ -11,12 +11,11 @@ export default function CategoryTile({ category }: { category: Category }) {
       href={`/category/${category.slug}`}
       className="group flex flex-col overflow-hidden rounded-sm border border-line bg-surface hairline lift"
     >
-      <div className="aspect-[3/2] overflow-hidden bg-gradient-to-b from-surface-2 to-ink">
+      <div className="aspect-[3/2] overflow-hidden bg-ink">
         {rep && (
-          <StickImage
-            woodColor={rep.woodColor}
-            handle={rep.handle}
-            className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+          <ProductImage
+            product={rep}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         )}
       </div>

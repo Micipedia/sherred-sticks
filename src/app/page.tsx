@@ -1,5 +1,5 @@
 import Link from "next/link";
-import StickImage from "@/components/StickImage";
+import ProductImage from "@/components/ProductImage";
 import CelticDivider from "@/components/CelticDivider";
 import ProductCard from "@/components/ProductCard";
 import CategoryTile from "@/components/CategoryTile";
@@ -22,7 +22,7 @@ const TRUST = [
 ];
 
 export default function HomePage() {
-  const storyStick = getProduct("tipperary-bata") ?? PRODUCTS[0];
+  const storyStick = getProduct("stick-16") ?? PRODUCTS[0];
 
   return (
     <>
@@ -141,12 +141,8 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="order-1 lg:order-2">
-            <div className="mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-sm border border-line bg-gradient-to-b from-surface-2 to-ink hairline">
-              <StickImage
-                woodColor={storyStick.woodColor}
-                handle={storyStick.handle}
-                className="h-full w-full"
-              />
+            <div className="mx-auto aspect-[4/5] max-w-sm overflow-hidden rounded-sm border border-line bg-ink hairline">
+              <ProductImage product={storyStick} className="h-full w-full object-cover" />
             </div>
           </div>
         </div>

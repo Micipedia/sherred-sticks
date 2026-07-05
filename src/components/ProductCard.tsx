@@ -1,5 +1,5 @@
 import Link from "next/link";
-import StickImage from "./StickImage";
+import ProductImage from "./ProductImage";
 import AddToCartButton from "./AddToCartButton";
 import { formatPrice, getCategory } from "@/lib/products";
 import type { Product } from "@/lib/types";
@@ -9,12 +9,16 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <article className="group flex flex-col overflow-hidden rounded-sm border border-line bg-surface hairline lift">
       <Link href={`/product/${product.slug}`} className="block">
-        <div className="aspect-[4/5] overflow-hidden bg-gradient-to-b from-surface-2 to-ink">
-          <StickImage
-            woodColor={product.woodColor}
-            handle={product.handle}
-            className="h-full w-full transition-transform duration-500 group-hover:scale-[1.04]"
+        <div className="relative aspect-[4/5] overflow-hidden bg-ink">
+          <ProductImage
+            product={product}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
+          {product.sold && (
+            <span className="absolute left-3 top-3 rounded-sm bg-ink/85 px-2.5 py-1 font-display text-[0.62rem] uppercase tracking-[0.18em] text-gold backdrop-blur">
+              Sold
+            </span>
+          )}
         </div>
       </Link>
       <div className="flex flex-1 flex-col p-4">
@@ -24,12 +28,20 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.name}
           </h3>
         </Link>
-        <p className="mt-1 text-sm text-muted">{product.wood}</p>
+        <p className="mt-1 text-sm text-muted">{product.detail}</p>
         <div className="mt-4 flex items-center justify-between">
-          <span className="text-lg tabular-nums text-gold">
-            {formatPrice(product.priceCents)}
-          </span>
-          <AddToCartButton product={product} label="Add" className="!px-3.5 !py-2" />
+          {product.sold ? (
+            <span className="font-display text-sm uppercase tracking-[0.16em] text-muted">
+              Sold
+            </span>
+          ) : (
+            <>
+              <span className="text-lg tabular-nums text-gold">
+                {product.priceCents != null ? formatPrice(product.priceCents) : ""}
+              </span>
+              <AddToCartButton product={product} label="Add" className="!px-3.5 !py-2" />
+            </>
+          )}
         </div>
       </div>
     </article>

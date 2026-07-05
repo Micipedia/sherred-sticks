@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "./CartProvider";
-import StickImage from "./StickImage";
+import { asset } from "@/lib/asset";
 import { IconClose, IconMinus, IconPlus, IconTrash } from "./Icons";
 import { formatPrice } from "@/lib/products";
 
@@ -79,8 +79,9 @@ export default function CartDrawer() {
           <ul className="flex-1 divide-y divide-line overflow-y-auto px-5">
             {lines.map((l) => (
               <li key={l.slug} className="flex gap-4 py-4">
-                <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-surface">
-                  <StickImage woodColor={l.woodColor} handle={l.handle} className="h-full w-full" />
+                <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-ink">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={asset(l.image)} alt={l.name} className="h-full w-full object-cover" />
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col">
                   <div className="flex items-start justify-between gap-2">
@@ -94,7 +95,6 @@ export default function CartDrawer() {
                       <IconTrash className="h-4 w-4" />
                     </button>
                   </div>
-                  <p className="text-xs text-muted">{l.wood}</p>
                   <div className="mt-auto flex items-center justify-between pt-2">
                     <div className="flex items-center rounded-sm border border-line">
                       <button
