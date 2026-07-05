@@ -5,10 +5,11 @@ import { IconCheck } from "./Icons";
 import { btnPrimary } from "@/lib/ui";
 
 // Where enquiries are delivered. FormSubmit relays the form to this inbox with
-// no backend needed. TODO before launch: set to the real shop inbox (Steve's
-// email or a dedicated address) and click the one-time confirmation email
-// FormSubmit sends, then swap for their hashed endpoint to hide the address.
-const CONTACT_ENDPOINT = "hello@sherredsticks.com";
+// no backend needed. One-time activation: the first submission triggers a
+// FormSubmit confirmation email to this address — click it once to switch the
+// relay on. TODO: swap this plain address for FormSubmit's hashed endpoint
+// (shown after activation) so the email isn't exposed in this PUBLIC repo.
+const CONTACT_ENDPOINT = "Pitchperfectno1@gmail.com";
 
 const inputClass =
   "w-full rounded-sm border border-line bg-ink px-3 py-2 text-parchment placeholder:text-muted/60 focus:border-gold focus:outline-none";
