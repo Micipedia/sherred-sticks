@@ -32,6 +32,10 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#0b0c0a",
+  // Keep the layout fixed — no pinch/zoom.
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({
