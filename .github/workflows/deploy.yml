@@ -26,10 +26,9 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Build static export
+        # Served from the apex custom domain https://sherredsticks.com/ (root path),
+        # so NEXT_PUBLIC_BASE_PATH is left empty. public/CNAME sets the custom domain.
         run: npm run build
-        env:
-          # Served from https://<user>.github.io/sherred-sticks/
-          NEXT_PUBLIC_BASE_PATH: /sherred-sticks
       - name: Disable Jekyll (so _next/ assets are served)
         run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
