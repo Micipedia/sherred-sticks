@@ -51,7 +51,21 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://sherredsticks.com/
     steps:
-      - id: deployment
+      # GitHub Pages' backend intermittently returns "Deployment failed, try
+      # again later" here even though the build succeeded — it clears on retry.
+      # We attempt up to 3x; only a 3rd consecutive failure fails the run (so a
+      # genuine break still notifies, but transient flakes self-heal silently).
+      - name: Deploy to Pages (attempt 1)
+        id: deploy1
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Deploy to Pages (attempt 2)
+        id: deploy2
+        if: steps.deploy1.outcome == 'failure'
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Deploy to Pages (final attempt)
+        if: steps.deploy2.outcome == 'failure'
         uses: actions/deploy-pages@v4
