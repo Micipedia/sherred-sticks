@@ -50,14 +50,14 @@ export default function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="mx-auto max-w-md overflow-hidden rounded-md border border-line bg-brand hairline">
+            <div className="mx-auto aspect-square max-w-md overflow-hidden rounded-md border border-line bg-ink hairline">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={asset("/brand/sherred-and-sons.png")}
-                alt="Sherred & Sons Walking Sticks"
-                width={1400}
-                height={763}
-                className="h-auto w-full"
+                src={asset("/brand/hero.jpg")}
+                alt="A fan of handmade Sherred & Sons walking sticks"
+                width={414}
+                height={414}
+                className="h-full w-full object-cover"
               />
             </div>
           </div>
