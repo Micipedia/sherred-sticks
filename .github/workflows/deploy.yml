@@ -25,6 +25,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Optimize product photos (shrink big phone uploads)
+        run: node scripts/optimize-images.mjs
       - name: Build static export
         # Served from the apex custom domain https://sherredsticks.com/ (root path),
         # so NEXT_PUBLIC_BASE_PATH is left empty. public/CNAME sets the custom domain.

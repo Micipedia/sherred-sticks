@@ -8,7 +8,7 @@ media:
     label: Product photos
     input: public/products
     output: /products
-    extensions: [jpg, jpeg, png, webp]
+    extensions: [jpg, jpeg, png, webp, avif, JPG, JPEG, PNG, WEBP]
     categories: [image]
 
 content:
