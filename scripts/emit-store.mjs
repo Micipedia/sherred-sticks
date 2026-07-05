@@ -17,6 +17,7 @@ function readDir(rel, mapper) {
 
 const sticks = readDir("src/data/products", (slug, d) => ({
   slug,
+  kind: "stick",
   name: d.name,
   priceCents: d.priceCents ?? null,
   sold: Boolean(d.sold),
@@ -25,6 +26,7 @@ const sticks = readDir("src/data/products", (slug, d) => ({
 
 const accessories = readDir("src/data/accessories", (slug, d) => ({
   slug,
+  kind: "accessory",
   name: d.name,
   priceCents: d.priceCents ?? null,
   // "sold" here means "not buyable" — reuse the same flag the Worker checks.

@@ -38,6 +38,8 @@ jobs:
         env:
           # The checkout backend (Cloudflare Worker) the basket posts to.
           NEXT_PUBLIC_CHECKOUT_URL: https://sherred-checkout.sherred-sons.workers.dev
+          # The photo-upload backend the /upload page posts shrunk photos to.
+          NEXT_PUBLIC_UPLOAD_URL: https://sherred-upload.sherred-sons.workers.dev
       - name: Disable Jekyll (so _next/ assets are served)
         run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
