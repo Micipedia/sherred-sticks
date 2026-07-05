@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import ProductImage from "@/components/ProductImage";
+import ProductGallery from "@/components/ProductGallery";
 import ProductCard from "@/components/ProductCard";
 import AddToCartButton from "@/components/AddToCartButton";
 import CelticDivider from "@/components/CelticDivider";
@@ -83,37 +83,12 @@ export default async function ProductPage({
 
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-14">
         {/* Images */}
-        <div>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-line bg-ink">
-            <ProductImage
-              product={product}
-              src={images[0]}
-              priority
-              className="h-full w-full object-contain"
-            />
-            {product.sold && (
-              <span className="absolute left-4 top-4 rounded-sm bg-ink/85 px-3 py-1 font-display text-xs uppercase tracking-[0.18em] text-gold backdrop-blur">
-                Sold
-              </span>
-            )}
-          </div>
-          {images.length > 1 && (
-            <div className="mt-3 grid grid-cols-4 gap-3">
-              {images.slice(1).map((img) => (
-                <div
-                  key={img}
-                  className="aspect-square overflow-hidden rounded-sm border border-line bg-ink"
-                >
-                  <ProductImage
-                    product={product}
-                    src={img}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ProductGallery
+          key={product.slug}
+          images={images}
+          name={product.name}
+          sold={product.sold}
+        />
 
         {/* Details */}
         <div className="flex flex-col">
