@@ -1,0 +1,17 @@
+{
+  "name": "The Golden Knob",
+  "category": "robust",
+  "detail": "Root-knob walking stick",
+  "sold": true,
+  "featured": false,
+  "shortDescription": "A smooth, rounded knob in warm honey tones.",
+  "description": "A neatly rounded root knob finished in warm honey colour, comfortable and full in the palm.",
+  "photos": [
+    "/products/stick-4/01.jpg",
+    "/products/stick-4/02.jpg",
+    "/products/stick-4/03.jpg",
+    "/products/stick-4/04.jpg",
+    "/products/stick-4/05.jpg"
+  ],
+  "buyUrl": ""
+}

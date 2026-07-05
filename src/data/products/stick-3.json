@@ -1,0 +1,17 @@
+{
+  "name": "Amber Shillelagh",
+  "category": "robust",
+  "detail": "Knobbed shillelagh",
+  "sold": true,
+  "featured": true,
+  "shortDescription": "A classic knobbed shillelagh with a rich amber head.",
+  "description": "A traditional knobbed shillelagh with a glossy amber crown and a straight, sturdy shaft.",
+  "photos": [
+    "/products/stick-3/01.jpg",
+    "/products/stick-3/02.jpg",
+    "/products/stick-3/03.jpg",
+    "/products/stick-3/04.jpg",
+    "/products/stick-3/05.jpg"
+  ],
+  "buyUrl": ""
+}

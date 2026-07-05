@@ -1,0 +1,17 @@
+{
+  "name": "The Long Staff",
+  "category": "hiking",
+  "detail": "Full-length staff",
+  "sold": true,
+  "featured": true,
+  "shortDescription": "A full-length straight walking staff for the trail.",
+  "description": "A tall, straight staff with a smooth seasoned shaft — a proper companion for open ground.",
+  "photos": [
+    "/products/stick-10/01.jpg",
+    "/products/stick-10/02.jpg",
+    "/products/stick-10/03.jpg",
+    "/products/stick-10/04.jpg",
+    "/products/stick-10/05.jpg"
+  ],
+  "buyUrl": ""
+}

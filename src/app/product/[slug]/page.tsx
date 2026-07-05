@@ -7,12 +7,11 @@ import AddToCartButton from "@/components/AddToCartButton";
 import CelticDivider from "@/components/CelticDivider";
 import {
   PRODUCTS,
-  formatPrice,
   getCategory,
   getProduct,
-  productImages,
   productsByCategory,
 } from "@/lib/products";
+import { formatPrice, productImages } from "@/lib/product-helpers";
 
 export const dynamicParams = false;
 

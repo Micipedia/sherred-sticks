@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "./CartProvider";
 import { asset } from "@/lib/asset";
 import { IconClose, IconMinus, IconPlus, IconTrash } from "./Icons";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/product-helpers";
 
 export default function CartDrawer() {
   const { lines, isOpen, close, setQty, remove, subtotalCents, count } = useCart();

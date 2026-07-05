@@ -1,0 +1,17 @@
+{
+  "name": "The Patterned Cane",
+  "category": "dinner",
+  "detail": "Decorative-shaft cane",
+  "sold": true,
+  "featured": false,
+  "shortDescription": "A knob-topped cane with a decorative, textured shaft.",
+  "description": "A knob-topped cane finished with a decorative, patterned shaft — a little more dressed-up than the rest.",
+  "photos": [
+    "/products/stick-12/01.jpg",
+    "/products/stick-12/02.jpg",
+    "/products/stick-12/03.jpg",
+    "/products/stick-12/04.jpg",
+    "/products/stick-12/05.jpg"
+  ],
+  "buyUrl": ""
+}

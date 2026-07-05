@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { asset } from "@/lib/asset";
 import { IconCheck } from "@/components/Icons";
-import { formatPrice } from "@/lib/products";
+import { formatPrice } from "@/lib/product-helpers";
 import { btnGhost, btnPrimary } from "@/lib/ui";
 
 export default function CheckoutPage() {

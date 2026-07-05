@@ -1,7 +1,8 @@
 import Link from "next/link";
 import ProductImage from "./ProductImage";
 import AddToCartButton from "./AddToCartButton";
-import { formatPrice, getCategory } from "@/lib/products";
+import { getCategory } from "@/lib/products";
+import { formatPrice } from "@/lib/product-helpers";
 import type { Product } from "@/lib/types";
 
 export default function ProductCard({ product }: { product: Product }) {

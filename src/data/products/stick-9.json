@@ -1,0 +1,17 @@
+{
+  "name": "The Midnight Knob",
+  "category": "robust",
+  "detail": "Dark knob stick",
+  "sold": true,
+  "featured": false,
+  "shortDescription": "A dark, glossy knob with a substantial head.",
+  "description": "A dark-toned knob stick with a full, glossy head and a solid, dependable feel.",
+  "photos": [
+    "/products/stick-9/01.jpg",
+    "/products/stick-9/02.jpg",
+    "/products/stick-9/03.jpg",
+    "/products/stick-9/04.jpg",
+    "/products/stick-9/05.jpg"
+  ],
+  "buyUrl": ""
+}

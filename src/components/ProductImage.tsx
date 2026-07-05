@@ -1,5 +1,5 @@
 import { asset } from "@/lib/asset";
-import { mainImage } from "@/lib/products";
+import { mainImage } from "@/lib/product-helpers";
 import type { Product } from "@/lib/types";
 
 /**

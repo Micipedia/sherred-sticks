@@ -1,0 +1,17 @@
+{
+  "name": "The Dark Knob",
+  "category": "robust",
+  "detail": "Dark-finished knob",
+  "sold": true,
+  "featured": false,
+  "shortDescription": "A boldly dark-finished knob stick.",
+  "description": "A striking walking stick finished in deep, near-black tones, with a bold knobbed head.",
+  "photos": [
+    "/products/stick-6/01.jpg",
+    "/products/stick-6/02.jpg",
+    "/products/stick-6/03.jpg",
+    "/products/stick-6/04.jpg",
+    "/products/stick-6/05.jpg"
+  ],
+  "buyUrl": ""
+}

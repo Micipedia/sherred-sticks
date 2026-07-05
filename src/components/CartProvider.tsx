@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import type { CartLine, Product } from "@/lib/types";
-import { mainImage } from "@/lib/products";
+import { mainImage } from "@/lib/product-helpers";
 
 const STORAGE_KEY = "sherred-cart-v1";
 

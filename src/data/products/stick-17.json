@@ -1,0 +1,16 @@
+{
+  "name": "The Shepherd's Crook",
+  "category": "aid",
+  "detail": "Crook-handled cane",
+  "sold": true,
+  "featured": false,
+  "shortDescription": "A dark crook-handled cane, hooked and ready.",
+  "description": "A dark, hooked crook-handled cane — comfortable to hold and easy to hang over an arm or a rail.",
+  "photos": [
+    "/products/stick-17/01.jpg",
+    "/products/stick-17/02.jpg",
+    "/products/stick-17/03.jpg",
+    "/products/stick-17/04.jpg"
+  ],
+  "buyUrl": ""
+}

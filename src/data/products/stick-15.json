@@ -1,0 +1,17 @@
+{
+  "name": "The Spiral Cane",
+  "category": "dinner",
+  "detail": "Carved spiral shaft",
+  "sold": true,
+  "featured": true,
+  "shortDescription": "A knob stick with a hand-carved spiralled shaft.",
+  "description": "A knobbed stick with a beautifully hand-carved spiral running the length of the shaft — a real eye-catcher.",
+  "photos": [
+    "/products/stick-15/01.jpg",
+    "/products/stick-15/02.jpg",
+    "/products/stick-15/03.jpg",
+    "/products/stick-15/04.jpg",
+    "/products/stick-15/05.jpg"
+  ],
+  "buyUrl": ""
+}

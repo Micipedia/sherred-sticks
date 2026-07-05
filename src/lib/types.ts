@@ -25,8 +25,11 @@ export interface Product {
   category: CategorySlug;
   /** Short descriptor shown under the name (form / character, not a price). */
   detail: string;
-  /** Number of photos in /public/products/<slug>/NN.jpg (01.jpg is the main). */
-  photos: number;
+  /**
+   * Photo paths, e.g. ["/products/<slug>/01.jpg", ...]. The first is the main
+   * (hero) image. Stored WITHOUT the deploy base path — asset() adds it at render.
+   */
+  photos: string[];
   sold: boolean;
   shortDescription: string;
   description: string;
@@ -35,6 +38,8 @@ export interface Product {
   priceCents?: number;
   /** Optional structured spec (maps to Steve's intake sheet fields). */
   spec?: StickSpec;
+  /** Live Stripe Payment Link for this stick (buy.stripe.com/...). Empty until set. */
+  buyUrl?: string;
 }
 
 export interface CartLine {

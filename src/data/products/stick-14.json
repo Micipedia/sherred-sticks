@@ -1,0 +1,17 @@
+{
+  "name": "The Field Staff",
+  "category": "hiking",
+  "detail": "Full-length staff",
+  "sold": true,
+  "featured": false,
+  "shortDescription": "A long, straight field staff.",
+  "description": "A simple, honest full-length staff for hill and field — light, strong and ready to walk.",
+  "photos": [
+    "/products/stick-14/01.jpg",
+    "/products/stick-14/02.jpg",
+    "/products/stick-14/03.jpg",
+    "/products/stick-14/04.jpg",
+    "/products/stick-14/05.jpg"
+  ],
+  "buyUrl": ""
+}

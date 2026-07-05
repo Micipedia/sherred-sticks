@@ -1,0 +1,65 @@
+# Pages CMS (pagescms.org) config — the friendly editor for the shop owner.
+# Connect this repo at app.pagescms.org; content saves commit to `main`, which
+# the GitHub Pages workflow auto-deploys. Media/content paths below match the
+# site's data layout (one JSON file per stick + photos under public/products).
+
+media:
+  - name: product-images
+    label: Product photos
+    input: public/products
+    output: /products
+    extensions: [jpg, jpeg, png, webp]
+    categories: [image]
+
+content:
+  - name: products
+    label: Walking sticks
+    type: collection
+    path: src/data/products
+    format: json
+    filename: '{fields.name}.json'
+    view:
+      fields: [name, category, sold, priceCents]
+    fields:
+      - name: name
+        label: Name
+        type: string
+        required: true
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values: [hiking, dinner, aid, robust]
+      - name: detail
+        label: Short detail line (under the name)
+        type: string
+      - name: priceCents
+        label: Price in pence — e.g. 4500 for £45.00
+        type: number
+      - name: sold
+        label: Sold
+        type: boolean
+        default: false
+      - name: featured
+        label: Show on homepage (featured)
+        type: boolean
+        default: false
+      - name: shortDescription
+        label: Card blurb (short)
+        type: text
+      - name: description
+        label: Full description
+        type: text
+      - name: buyUrl
+        label: Stripe buy link (paste the buy.stripe.com/... link)
+        type: string
+        pattern:
+          regex: '^(https://buy\.stripe\.com/.+)?$'
+          message: Must be a https://buy.stripe.com/... link (or left empty)
+      - name: photos
+        label: Photos (drag to reorder — the first is the main photo)
+        type: image
+        list: true
+        options:
+          media: product-images
