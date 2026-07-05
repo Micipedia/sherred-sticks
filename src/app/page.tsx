@@ -50,7 +50,7 @@ export default function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="mx-auto max-w-md overflow-hidden rounded-md border border-line hairline">
+            <div className="mx-auto max-w-md overflow-hidden rounded-md border border-line bg-brand hairline">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={asset("/brand/sherred-and-sons.png")}
