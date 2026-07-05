@@ -61,7 +61,7 @@ for (const file of MEDIA_DIRS.flatMap(walk)) {
   }
   try {
     const tmp = path.join(os.tmpdir(), `heic-${process.pid}-${renames.length}.png`);
-    execFileSync("heif-convert", [file, tmp], { stdio: "ignore" });
+    execFileSync("heif-convert", [file, tmp], { stdio: ["ignore", "ignore", "pipe"] });
     const buf = await sharp(tmp)
       .rotate()
       .resize({ width: MAX_WIDTH, withoutEnlargement: true })
@@ -73,7 +73,8 @@ for (const file of MEDIA_DIRS.flatMap(walk)) {
     renames.push([oldRef, newRef]);
     console.log(`converted ${oldRef} -> ${newRef} (${Math.round(buf.length / 1024)}KB)`);
   } catch (err) {
-    console.log(`WARNING: failed to convert ${oldRef}: ${err.message}`);
+    const detail = (err.stderr && err.stderr.toString().trim()) || err.message;
+    console.log(`WARNING: failed to convert ${oldRef}: ${detail}`);
   }
 }
 
