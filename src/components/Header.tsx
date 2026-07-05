@@ -26,7 +26,7 @@ export default function Header() {
     pathname === href || (href !== "/" && pathname?.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-30 border-b border-line bg-ink/90 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-line bg-brand">
       <div className="container-page flex h-16 items-center justify-between gap-4">
         {/* Logo */}
         <Link
@@ -38,7 +38,7 @@ export default function Header() {
           <img
             src={asset("/brand/sherred-and-sons.png")}
             alt="Sherred & Sons Walking Sticks"
-            className="h-11 w-auto rounded-sm"
+            className="h-12 w-auto"
           />
         </Link>
 
