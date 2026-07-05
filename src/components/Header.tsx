@@ -27,19 +27,22 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-brand">
-      <div className="container-page flex h-16 items-center justify-between gap-4">
+      <div className="container-page flex h-16 items-center justify-between gap-4 sm:h-20">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center"
+          className="flex items-center gap-3"
           aria-label="Sherred & Sons Walking Sticks — home"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={asset("/brand/sherred-and-sons.png")}
-            alt="Sherred & Sons Walking Sticks"
-            className="h-12 w-auto"
+            src={asset("/brand/crest.png")}
+            alt="Sherred & Sons crest"
+            className="h-12 w-auto sm:h-16"
           />
+          <span className="font-display text-xl leading-none tracking-wide text-parchment sm:text-3xl">
+            Sherred <span className="text-gold">&amp;</span> Sons
+          </span>
         </Link>
 
         {/* Desktop nav */}
