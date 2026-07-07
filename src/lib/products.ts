@@ -52,9 +52,14 @@ function loadProducts(): Product[] {
       ) as Omit<Product, "slug">;
       return { slug, ...data };
     })
-    // Keep a stable, human order (stick-1, stick-2, … stick-10) rather than
-    // lexicographic (stick-1, stick-10, …). Numeric-aware compare on the slug.
-    .sort((a, b) => a.slug.localeCompare(b.slug, undefined, { numeric: true }));
+    // Available sticks first, sold ones after — a customer sees what they can
+    // actually buy before the sold showcase. Within each group keep a stable,
+    // human order (stick-1, stick-2, … stick-10) via a numeric-aware slug compare
+    // (not the lexicographic stick-1, stick-10, …).
+    .sort((a, b) => {
+      if (a.sold !== b.sold) return a.sold ? 1 : -1;
+      return a.slug.localeCompare(b.slug, undefined, { numeric: true });
+    });
 }
 
 export const PRODUCTS: Product[] = loadProducts();
