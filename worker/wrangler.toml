@@ -5,7 +5,7 @@ main = "src/index.js"
 compatibility_date = "2025-06-01"
 workers_dev = true
 
-# Flat delivery charge in pence added at checkout (0 = no delivery charge).
-# Change and redeploy to adjust.
-[vars]
-SHIPPING_CENTS = "0"
+# Delivery is now zone-based: the Worker reads the rate table from the site's
+# /shipping.json (source: src/data/shipping.json) and charges the buyer's
+# destination zone. To change a postage price, edit src/data/shipping.json and
+# push — no Worker redeploy needed. (The old flat SHIPPING_CENTS var is retired.)
