@@ -1,6 +1,9 @@
 # Checkout backend for the shop. Deploy with:  npx wrangler deploy
 # Set the Stripe key with:  npx wrangler secret put STRIPE_SECRET_KEY
 name = "sherred-checkout"
+# Steve's Cloudflare account (where this Worker already lives). Pinning it means a
+# deploy only succeeds when logged into an account with access — never the wrong one.
+account_id = "27c04775f8da13995086ac057a2b2319"
 main = "src/index.js"
 compatibility_date = "2025-06-01"
 workers_dev = true
