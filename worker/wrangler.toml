@@ -1,11 +1,14 @@
 # Checkout backend for the shop. Deploy with:  npx wrangler deploy
 # Set the Stripe key with:  npx wrangler secret put STRIPE_SECRET_KEY
 name = "sherred-checkout"
+# Steve's Cloudflare account (where this Worker already lives). Pinning it means a
+# deploy only succeeds when logged into an account with access — never the wrong one.
+account_id = "27c04775f8da13995086ac057a2b2319"
 main = "src/index.js"
 compatibility_date = "2025-06-01"
 workers_dev = true
 
-# Flat delivery charge in pence added at checkout (0 = no delivery charge).
-# Change and redeploy to adjust.
-[vars]
-SHIPPING_CENTS = "0"
+# Delivery is now zone-based: the Worker reads the rate table from the site's
+# /shipping.json (source: src/data/shipping.json) and charges the buyer's
+# destination zone. To change a postage price, edit src/data/shipping.json and
+# push — no Worker redeploy needed. (The old flat SHIPPING_CENTS var is retired.)

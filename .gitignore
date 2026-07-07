@@ -45,3 +45,4 @@ qa/*.png
 
 # Generated at build by scripts/emit-store.mjs
 public/store.json
+public/shipping.json

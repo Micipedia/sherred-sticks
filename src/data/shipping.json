@@ -1,0 +1,26 @@
+{
+  "_comment": "Zone postage for a walking stick up to ~127cm, ~1.5-2kg, in a long box/tube. Rates are in PENCE (gbp). One charge per order. ESTIMATES anchored to Parcelforce Global Priority (the cheapest service that accepts 127cm) — confirm with a live Parcel2Go quote at 130x12x12cm / 2kg before relying on them. Edit a rateCents to change a price. Countries not listed in countryZone fall back to defaultZone.",
+  "currency": "gbp",
+  "defaultZone": "ROW",
+  "zones": {
+    "UK":    { "label": "UK delivery",                "rateCents": 1200 },
+    "EU":    { "label": "Delivery to Europe",          "rateCents": 2400 },
+    "US_CA": { "label": "Delivery to USA / Canada",    "rateCents": 4000 },
+    "AU_NZ": { "label": "Delivery to Australia / NZ",  "rateCents": 5000 },
+    "ROW":   { "label": "Worldwide delivery",          "rateCents": 5000 }
+  },
+  "countryZone": {
+    "GB": "UK", "GG": "UK", "JE": "UK", "IM": "UK",
+
+    "IE": "EU", "FR": "EU", "DE": "EU", "ES": "EU", "IT": "EU", "PT": "EU",
+    "NL": "EU", "BE": "EU", "LU": "EU", "AT": "EU", "DK": "EU", "SE": "EU",
+    "FI": "EU", "NO": "EU", "IS": "EU", "CH": "EU", "PL": "EU", "CZ": "EU",
+    "SK": "EU", "HU": "EU", "SI": "EU", "HR": "EU", "RO": "EU", "BG": "EU",
+    "GR": "EU", "EE": "EU", "LV": "EU", "LT": "EU", "CY": "EU", "MT": "EU",
+    "LI": "EU", "MC": "EU", "AD": "EU", "SM": "EU", "VA": "EU", "GI": "EU",
+
+    "US": "US_CA", "CA": "US_CA",
+
+    "AU": "AU_NZ", "NZ": "AU_NZ"
+  }
+}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import { asset } from "@/lib/asset";
 import { formatPrice } from "@/lib/product-helpers";
+import { COUNTRIES, shippingCentsForCountry, shippingLabelForCountry } from "@/lib/shipping";
 import { btnGhost, btnPrimary } from "@/lib/ui";
 
 const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL;
@@ -13,6 +14,9 @@ export default function CheckoutPage() {
   const { lines, subtotalCents, count, hydrated } = useCart();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [country, setCountry] = useState("GB");
+  const deliveryCents = shippingCentsForCountry(country);
+  const totalCents = subtotalCents + deliveryCents;
 
   async function pay() {
     if (!CHECKOUT_URL) {
@@ -25,7 +29,10 @@ export default function CheckoutPage() {
       const res = await fetch(CHECKOUT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items: lines.map((l) => ({ slug: l.slug, qty: l.qty })) }),
+        body: JSON.stringify({
+          items: lines.map((l) => ({ slug: l.slug, qty: l.qty })),
+          country,
+        }),
       });
       const data = await res.json();
       if (!res.ok || !data.url) throw new Error(data.error || "Something went wrong.");
@@ -83,17 +90,49 @@ export default function CheckoutPage() {
           ))}
         </ul>
 
-        <div className="mt-6 flex items-center justify-between border-t border-line pt-6">
-          <span className="font-display text-lg uppercase tracking-[0.12em] text-parchment">
-            Subtotal ({count})
-          </span>
-          <span className="text-2xl tabular-nums text-gold">
-            {formatPrice(subtotalCents)}
-          </span>
+        {/* Destination — sets the delivery charge before the payment page */}
+        <div className="mt-6 border-t border-line pt-6">
+          <label
+            htmlFor="ship-country"
+            className="block font-display text-sm uppercase tracking-[0.12em] text-parchment"
+          >
+            Shipping to
+          </label>
+          <select
+            id="ship-country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="mt-2 w-full rounded-sm border border-line bg-ink px-3 py-2 text-parchment focus:border-gold focus:outline-none"
+          >
+            {COUNTRIES.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+          <p className="mt-2 text-xs text-muted">
+            Sticks post from Wiltshire, England. Delivery is a flat rate per order for your
+            destination; you&apos;ll confirm your address on the secure payment page.
+          </p>
         </div>
-        <p className="mt-1 text-right text-xs text-muted">
-          Delivery details are collected on the secure payment page.
-        </p>
+
+        {/* Totals */}
+        <dl className="mt-6 space-y-2">
+          <div className="flex items-center justify-between text-parchment">
+            <dt>Subtotal ({count})</dt>
+            <dd className="tabular-nums text-gold">{formatPrice(subtotalCents)}</dd>
+          </div>
+          <div className="flex items-center justify-between text-parchment">
+            <dt>{shippingLabelForCountry(country)}</dt>
+            <dd className="tabular-nums text-gold">{formatPrice(deliveryCents)}</dd>
+          </div>
+          <div className="flex items-center justify-between border-t border-line pt-3">
+            <dt className="font-display text-lg uppercase tracking-[0.12em] text-parchment">
+              Total
+            </dt>
+            <dd className="text-2xl tabular-nums text-gold">{formatPrice(totalCents)}</dd>
+          </div>
+        </dl>
 
         {error && (
           <p className="mt-6 rounded-sm border border-oxblood/50 bg-oxblood/10 p-3 text-sm text-oxblood">

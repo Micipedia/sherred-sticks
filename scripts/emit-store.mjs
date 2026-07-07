@@ -37,3 +37,11 @@ const accessories = readDir("src/data/accessories", (slug, d) => ({
 const store = [...sticks, ...accessories];
 fs.writeFileSync(path.join(process.cwd(), "public/store.json"), JSON.stringify(store));
 console.log(`wrote public/store.json (${sticks.length} sticks, ${accessories.length} accessories)`);
+
+// Publish the shipping zone table so the checkout Worker can read the SAME rates
+// the site's checkout page shows — one source of truth, no drift.
+fs.copyFileSync(
+  path.join(process.cwd(), "src/data/shipping.json"),
+  path.join(process.cwd(), "public/shipping.json")
+);
+console.log("copied src/data/shipping.json -> public/shipping.json");
