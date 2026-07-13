@@ -3,6 +3,7 @@ import ProductImage from "@/components/ProductImage";
 import CelticDivider from "@/components/CelticDivider";
 import ProductCard from "@/components/ProductCard";
 import CategoryTile from "@/components/CategoryTile";
+import HeroCarousel from "@/components/HeroCarousel";
 import {
   IconArrow,
   IconChisel,
@@ -11,7 +12,7 @@ import {
   IconTruck,
 } from "@/components/Icons";
 import { CATEGORIES, PRODUCTS, featuredProducts, getProduct } from "@/lib/products";
-import { asset } from "@/lib/asset";
+import { mainImage } from "@/lib/product-helpers";
 import { btnGhost, btnPrimary } from "@/lib/ui";
 import home from "@/data/content/home.json";
 
@@ -24,6 +25,16 @@ const TRUST = [
 
 export default function HomePage() {
   const storyStick = getProduct("stick-16") ?? PRODUCTS[0];
+
+  // Hero rotation: lead with the brand shot, then real stick photos, so the
+  // hero refreshes itself as Steve adds sticks (no separate images to manage).
+  // Capped so it stays a punchy handful rather than the whole catalogue.
+  const heroSlides = [
+    { src: "/brand/hero.jpg", alt: "A fan of handmade Sherred & Sons walking sticks" },
+    ...PRODUCTS.filter((p) => mainImage(p))
+      .slice(0, 5)
+      .map((p) => ({ src: mainImage(p), alt: p.name })),
+  ];
 
   return (
     <>
@@ -50,16 +61,7 @@ export default function HomePage() {
           </div>
 
           <div className="relative">
-            <div className="mx-auto aspect-square max-w-md overflow-hidden rounded-md border border-line bg-ink hairline">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={asset("/brand/hero.jpg")}
-                alt="A fan of handmade Sherred & Sons walking sticks"
-                width={414}
-                height={414}
-                className="h-full w-full object-cover"
-              />
-            </div>
+            <HeroCarousel slides={heroSlides} />
           </div>
         </div>
       </section>

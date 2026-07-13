@@ -26,20 +26,38 @@ export default function ProductGallery({
 
   return (
     <div>
-      {/* Main image */}
+      {/* Main image — with more than one photo, clicking it advances to the
+          next (wrapping back to the first), so you can flick through without
+          reaching for the thumbnails. */}
       <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-line bg-ink">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={asset(main)}
-          alt={
-            images.length > 1
-              ? `${name} — photo ${safeActive + 1} of ${images.length}`
-              : name
-          }
-          className="h-full w-full object-contain"
-        />
+        {images.length > 1 ? (
+          <button
+            type="button"
+            onClick={() => setActive((a) => (a + 1) % images.length)}
+            aria-label={`Show next photo (currently ${safeActive + 1} of ${images.length})`}
+            className="group block h-full w-full cursor-pointer"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={asset(main)}
+              alt={`${name} — photo ${safeActive + 1} of ${images.length}`}
+              className="h-full w-full object-contain"
+            />
+            {/* Photo counter */}
+            <span className="pointer-events-none absolute bottom-3 left-3 rounded-sm bg-ink/70 px-2 py-1 text-[0.65rem] tracking-wide text-parchment/80 backdrop-blur">
+              {safeActive + 1} / {images.length}
+            </span>
+            {/* "Next photo" hint, shown on hover */}
+            <span className="pointer-events-none absolute bottom-3 right-3 rounded-sm bg-ink/80 px-2.5 py-1 font-display text-[0.65rem] uppercase tracking-[0.15em] text-gold opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
+              Next photo &rarr;
+            </span>
+          </button>
+        ) : (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img src={asset(main)} alt={name} className="h-full w-full object-contain" />
+        )}
         {sold && (
-          <span className="absolute left-4 top-4 rounded-sm bg-ink/85 px-3 py-1 font-display text-xs uppercase tracking-[0.18em] text-gold backdrop-blur">
+          <span className="pointer-events-none absolute left-4 top-4 rounded-sm bg-ink/85 px-3 py-1 font-display text-xs uppercase tracking-[0.18em] text-gold backdrop-blur">
             Sold
           </span>
         )}
