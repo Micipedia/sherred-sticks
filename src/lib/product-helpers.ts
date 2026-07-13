@@ -14,12 +14,17 @@ export function formatPrice(cents: number): string {
   return GBP.format(cents / 100);
 }
 
-/** Main (hero) photo for a product — the first in its photo list. */
+/**
+ * Main (hero) photo for a product — the first in its photo list. Returns "" if
+ * the product has no photos yet: a stick added through the CMS starts with no
+ * photos (Steve adds the text first, uploads photos a few minutes later), so
+ * `photos` can legitimately be missing and must not crash the build/render.
+ */
 export function mainImage(p: Product): string {
-  return p.photos[0] ?? "";
+  return p.photos?.[0] ?? "";
 }
 
-/** All photo paths for a product's gallery. */
+/** All photo paths for a product's gallery (empty array if none yet). */
 export function productImages(p: Product): string[] {
-  return p.photos;
+  return p.photos ?? [];
 }
