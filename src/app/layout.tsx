@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/components/CartProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import CartDrawer from "@/components/CartDrawer";
 
 const display = Cinzel({
@@ -47,6 +48,7 @@ export default function RootLayout({
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>
+          <NewsletterSignup />
           <Footer />
           <CartDrawer />
         </CartProvider>

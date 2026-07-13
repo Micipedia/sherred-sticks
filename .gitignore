@@ -46,3 +46,6 @@ qa/*.png
 # Generated at build by scripts/emit-store.mjs
 public/store.json
 public/shipping.json
+
+# Generated at build by scripts/emit-feed.mjs (the mailing-list product feed)
+public/feed.xml

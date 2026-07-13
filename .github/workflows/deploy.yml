@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        # Full history (not a shallow clone) so scripts/emit-feed.mjs can read
+        # each stick's first-added commit date for a stable RSS <pubDate>.
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -31,6 +35,8 @@ jobs:
         run: node scripts/optimize-images.mjs
       - name: Build the checkout price list (store.json)
         run: node scripts/emit-store.mjs
+      - name: Build the mailing-list product feed (feed.xml)
+        run: node scripts/emit-feed.mjs
       - name: Build static export
         # Served from the apex custom domain https://sherredsticks.com/ (root path),
         # so NEXT_PUBLIC_BASE_PATH is left empty. public/CNAME sets the custom domain.
