@@ -6,8 +6,8 @@ import { asset } from "@/lib/asset";
 export type HeroSlide = { src: string; alt: string };
 
 /**
- * The hero image, as a slow rotating showcase. Slides cross-fade every
- * `intervalMs` (default 10s). Fed a mix of the brand shot and real stick
+ * The hero image, as a rotating showcase. Slides cross-fade every
+ * `intervalMs` (default 5s) and loop back to the start. Fed a mix of the brand shot and real stick
  * photos by the home page, so it keeps itself fresh as Steve adds sticks.
  *
  * Nice-to-haves that keep it from being annoying: it pauses while the pointer
@@ -16,7 +16,7 @@ export type HeroSlide = { src: string; alt: string };
  */
 export default function HeroCarousel({
   slides,
-  intervalMs = 10000,
+  intervalMs = 5000,
 }: {
   slides: HeroSlide[];
   intervalMs?: number;

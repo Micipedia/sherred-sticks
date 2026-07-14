@@ -31,6 +31,10 @@ export default function HomePage() {
   // Capped so it stays a punchy handful rather than the whole catalogue.
   const heroSlides = [
     { src: "/brand/hero.jpg", alt: "A fan of handmade Sherred & Sons walking sticks" },
+    {
+      src: "/brand/hero-2.jpg",
+      alt: "A handmade Sherred & Sons shillelagh with a polished knob and a twisted shaft",
+    },
     ...PRODUCTS.filter((p) => mainImage(p))
       .slice(0, 5)
       .map((p) => ({ src: mainImage(p), alt: p.name })),
