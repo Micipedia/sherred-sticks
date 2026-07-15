@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   },
   description:
     "Handmade walking sticks, traditional Irish blackthorn shillelaghs, dress canes and support sticks — shaped the old way and finished by hand.",
+  // Pre-launch: keep the whole store out of the index until real orders open.
+  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
