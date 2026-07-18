@@ -21,7 +21,7 @@ workers_dev = true
 # the next (the remainder carries). PLACEHOLDER: set to Steve's real materials +
 # fair making cost before go-live (e.g. 4000 = £40). Editing this re-derives the
 # tally live — no data migration.
-UNIT_CENTS = "4000"
+UNIT_CENTS = "15000"
 
 # The running tally lives in this KV namespace. Create it once (needs Cloudflare
 # access to Steve's account) and paste the returned id below:

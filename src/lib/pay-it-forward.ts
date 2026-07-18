@@ -29,9 +29,8 @@
 const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL ?? "";
 
 export const payItForward = {
-  // Flip to true only after the Worker (webhook + KV tally) is deployed and a real
-  // contribution has been tested end-to-end.
-  enabled: false,
+  // LIVE 2026-07-18 — Worker (webhook + KV tally) deployed and verified end-to-end.
+  enabled: true,
 
   // The checkout Worker. Contribution-only sessions POST here; the tally is read
   // from `${endpoint}/tally`. Same Worker the basket already posts to.
