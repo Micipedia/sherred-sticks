@@ -88,6 +88,9 @@ export default {
     if (request.method === "GET" && path === "/tally") return json(await readTally(env));
     // Stripe -> Worker; not a browser call, so it doesn't use CORS.
     if (request.method === "POST" && path === "/webhook") return handleWebhook(request, env);
+    // Admin: seed or correct the pool (also the reliable reset — a Worker write is
+    // write-through, so the colo cache updates at once). Guarded by ADMIN_TOKEN.
+    if (request.method === "POST" && path === "/admin/set") return handleAdminSet(request, env, json);
     if (request.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
     return createSession(request, env, json);
@@ -286,6 +289,30 @@ async function contributionFromPI(env, piId) {
   }
 }
 
+// ── Admin: set/seed/reset the pool ────────────────────────────────────────────
+// Lets Steve seed the bar with launch momentum, correct a figure, or reset — via a
+// Worker write (write-through, so it takes effect immediately, unlike an external
+// KV write). Guarded by the ADMIN_TOKEN secret. Body: {raisedCents?, refundedCents?}.
+async function handleAdminSet(request, env, json) {
+  if (!env.ADMIN_TOKEN || request.headers.get("x-admin-token") !== env.ADMIN_TOKEN) {
+    return json({ error: "unauthorized" }, 401);
+  }
+  if (!env.TALLY) return json({ error: "no tally store" }, 503);
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "bad request" }, 400);
+  }
+  if (body.raisedCents !== undefined) {
+    await env.TALLY.put("raised_total", String(Math.max(0, Math.floor(Number(body.raisedCents) || 0))));
+  }
+  if (body.refundedCents !== undefined) {
+    await env.TALLY.put("refunded_total", String(Math.max(0, Math.floor(Number(body.refundedCents) || 0))));
+  }
+  return json(await readTally(env));
+}
+
 // ── Public tally ──────────────────────────────────────────────────────────────
 // Derives everything from two gross counters + the unit cost, so it's always
 // self-consistent: giftedCount = full sticks the NET contributions have funded,
@@ -296,8 +323,10 @@ async function readTally(env) {
   if (!env.TALLY || !unit) {
     return { raisedCents: 0, unitCents: unit, giftedCount: 0, netRaisedCents: 0 };
   }
-  const raised = Number(await env.TALLY.get("raised_total")) || 0;
-  const refunded = Number(await env.TALLY.get("refunded_total")) || 0;
+  // cacheTtl bounds how stale the public tally can be (KV min is 60s). Fine for a
+  // donation tally, and it caps the colo read-cache so an updated total surfaces.
+  const raised = Number(await env.TALLY.get("raised_total", { cacheTtl: 60 })) || 0;
+  const refunded = Number(await env.TALLY.get("refunded_total", { cacheTtl: 60 })) || 0;
   const net = Math.max(0, raised - refunded);
   const giftedCount = Math.floor(net / unit);
   return {

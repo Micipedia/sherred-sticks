@@ -29,4 +29,4 @@ UNIT_CENTS = "4000"
 # Until a real id is bound, /tally reads as £0 and the webhook simply no-ops.
 [[kv_namespaces]]
 binding = "TALLY"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "5c5ae9b6e8f64e5e90b26b5e5ec37c27"
