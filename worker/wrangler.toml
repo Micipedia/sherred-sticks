@@ -1,5 +1,6 @@
 # Checkout backend for the shop. Deploy with:  npx wrangler deploy
-# Set the Stripe key with:  npx wrangler secret put STRIPE_SECRET_KEY
+# Secrets:  npx wrangler secret put STRIPE_SECRET_KEY
+#           npx wrangler secret put STRIPE_WEBHOOK_SECRET   (Pay It Forward tally)
 name = "sherred-checkout"
 # Steve's Cloudflare account (where this Worker already lives). Pinning it means a
 # deploy only succeeds when logged into an account with access — never the wrong one.
@@ -12,3 +13,20 @@ workers_dev = true
 # /shipping.json (source: src/data/shipping.json) and charges the buyer's
 # destination zone. To change a postage price, edit src/data/shipping.json and
 # push — no Worker redeploy needed. (The old flat SHIPPING_CENTS var is retired.)
+
+# ── Pay It Forward tally ───────────────────────────────────────────────────────
+[vars]
+# The honest cost of making ONE gifted stick, in pence — this is the tally target.
+# When contributions reach it, that's one stick funded and the bar rolls over to
+# the next (the remainder carries). PLACEHOLDER: set to Steve's real materials +
+# fair making cost before go-live (e.g. 4000 = £40). Editing this re-derives the
+# tally live — no data migration.
+UNIT_CENTS = "4000"
+
+# The running tally lives in this KV namespace. Create it once (needs Cloudflare
+# access to Steve's account) and paste the returned id below:
+#   npx wrangler kv namespace create TALLY
+# Until a real id is bound, /tally reads as £0 and the webhook simply no-ops.
+[[kv_namespaces]]
+binding = "TALLY"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

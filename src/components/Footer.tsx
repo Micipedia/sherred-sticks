@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { asset } from "@/lib/asset";
 import { CATEGORIES } from "@/lib/products";
+import { payItForward } from "@/lib/pay-it-forward";
 
 const PAYMENTS = ["Visa", "Mastercard", "Amex", "Apple Pay", "PayPal"];
 
@@ -59,6 +60,13 @@ export default function Footer() {
                 Our story
               </Link>
             </li>
+            {payItForward.enabled && (
+              <li>
+                <Link href="/pay-it-forward" className="text-parchment-dim hover:text-gold">
+                  Pay it forward
+                </Link>
+              </li>
+            )}
             <li>
               <Link href="/contact" className="text-parchment-dim hover:text-gold">
                 Contact

@@ -7,6 +7,8 @@ import { asset } from "@/lib/asset";
 import { formatPrice } from "@/lib/product-helpers";
 import { COUNTRIES, shippingCentsForCountry, shippingLabelForCountry } from "@/lib/shipping";
 import { btnGhost, btnPrimary } from "@/lib/ui";
+import ContributionPicker from "@/components/ContributionPicker";
+import { payItForward } from "@/lib/pay-it-forward";
 
 const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL;
 
@@ -15,8 +17,9 @@ export default function CheckoutPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [country, setCountry] = useState("GB");
+  const [contributionCents, setContributionCents] = useState(0);
   const deliveryCents = shippingCentsForCountry(country);
-  const totalCents = subtotalCents + deliveryCents;
+  const totalCents = subtotalCents + deliveryCents + contributionCents;
 
   async function pay() {
     if (!CHECKOUT_URL) {
@@ -32,6 +35,7 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           items: lines.map((l) => ({ slug: l.slug, qty: l.qty })),
           country,
+          contributionCents,
         }),
       });
       const data = await res.json();
@@ -116,6 +120,28 @@ export default function CheckoutPage() {
           </p>
         </div>
 
+        {/* Pay It Forward — optional contribution toward a stick we gift, free, to
+            someone who can't afford one. Strictly opt-in; nothing pre-selected. */}
+        {payItForward.enabled && (
+          <div className="mt-6 rounded-sm border border-gold/30 bg-gold/5 p-5">
+            <p className="font-display text-sm uppercase tracking-[0.12em] text-parchment">
+              Pay It Forward <span className="text-muted">(optional)</span>
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-parchment-dim">
+              Add a little toward a handmade stick we give, free, to someone who
+              can&apos;t afford one — handed out through our free monthly draw.
+              Every penny goes to sticks.
+            </p>
+            <div className="mt-4">
+              <ContributionPicker
+                valueCents={contributionCents}
+                onChange={setContributionCents}
+                idPrefix="pif-checkout"
+              />
+            </div>
+          </div>
+        )}
+
         {/* Totals */}
         <dl className="mt-6 space-y-2">
           <div className="flex items-center justify-between text-parchment">
@@ -126,6 +152,12 @@ export default function CheckoutPage() {
             <dt>{shippingLabelForCountry(country)}</dt>
             <dd className="tabular-nums text-gold">{formatPrice(deliveryCents)}</dd>
           </div>
+          {contributionCents > 0 && (
+            <div className="flex items-center justify-between text-parchment">
+              <dt>Pay It Forward</dt>
+              <dd className="tabular-nums text-gold">{formatPrice(contributionCents)}</dd>
+            </div>
+          )}
           <div className="flex items-center justify-between border-t border-line pt-3">
             <dt className="font-display text-lg uppercase tracking-[0.12em] text-parchment">
               Total
