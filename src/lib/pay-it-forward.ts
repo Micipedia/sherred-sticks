@@ -46,10 +46,9 @@ export const payItForward = {
   minCents: 100, // £1 — also keeps a contribution-only order above Stripe's £0.30 floor
   maxCents: 100000, // £1,000
 
-  // Where people in financial hardship register for the FREE monthly draw. Steve
-  // runs this on his Facebook page — paste the post/page link here. While empty,
-  // the page shows a "draw opens for registration soon" note instead of a button.
-  registerUrl: "",
+  // NOTE: the free hardship draw is run separately by Steve on his own Facebook —
+  // the site deliberately does NOT link to or handle draw registration. It only
+  // collects contributions and explains, honestly, where the money goes.
 } as const;
 
 export type PayItForward = typeof payItForward;

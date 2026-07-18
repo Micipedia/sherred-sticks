@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import ContributeBox from "@/components/ContributeBox";
 import CelticDivider from "@/components/CelticDivider";
-import { payItForward } from "@/lib/pay-it-forward";
-import { btnGhost } from "@/lib/ui";
 
 export const metadata: Metadata = {
   title: "Pay It Forward",
@@ -24,7 +22,7 @@ const STEPS = [
   {
     n: "3",
     title: "A name is drawn",
-    body: "Anyone in financial hardship can enter our free monthly draw — no payment, ever. We pick a name at random and post the stick, free.",
+    body: "Each funded stick is given, free, to someone in financial hardship — a name drawn at random. No payment to take part, ever.",
   },
 ];
 
@@ -69,28 +67,15 @@ export default function PayItForwardPage() {
         <ContributeBox />
       </section>
 
-      {/* The free draw */}
+      {/* Where the money goes — the giveaway is run separately, no on-site entry. */}
       <section className="mx-auto mt-12 max-w-2xl rounded-sm border border-line bg-ink-2 p-8">
-        <h2 className="font-display text-2xl text-parchment">The free monthly draw</h2>
+        <h2 className="font-display text-2xl text-parchment">Where your gift goes</h2>
         <p className="mt-3 leading-relaxed text-parchment-dim">
-          Entry is completely free and open to anyone facing financial hardship —
-          there is never any payment or purchase to enter. Each month a stick is
-          ready, we draw one name at random and post the stick out, free of charge.
+          Every contribution goes toward a handmade stick that we give away, free,
+          to someone facing financial hardship — chosen at random through a free
+          draw, with no payment or purchase ever needed to take part. When enough is
+          pooled to cover one, we make it by hand and pass it on.
         </p>
-        {payItForward.registerUrl ? (
-          <a
-            href={payItForward.registerUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${btnGhost} mt-6`}
-          >
-            Register for the draw
-          </a>
-        ) : (
-          <p className="mt-6 text-sm text-muted">
-            The free draw opens for registration soon — check back shortly.
-          </p>
-        )}
       </section>
 
       {/* Honest small print — keeps us clearly on the commercial side of the line */}
