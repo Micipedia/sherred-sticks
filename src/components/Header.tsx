@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useCart } from "./CartProvider";
 import { asset } from "@/lib/asset";
 import { IconCart, IconMenu, IconClose } from "./Icons";
+import { payItForward } from "@/lib/pay-it-forward";
 
 const NAV = [
   { href: "/shop", label: "Shop" },
@@ -16,6 +17,9 @@ const NAV = [
   { href: "/accessories", label: "Accessories" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  // Standalone giving entry point — so it's discoverable without a stick in the
+  // basket. Only shown while Pay It Forward is live.
+  ...(payItForward.enabled ? [{ href: "/pay-it-forward", label: "Pay It Forward" }] : []),
 ];
 
 export default function Header() {

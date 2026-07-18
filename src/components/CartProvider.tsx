@@ -10,6 +10,7 @@ import {
 } from "react";
 import type { CartLine, Product } from "@/lib/types";
 import { mainImage } from "@/lib/product-helpers";
+import { PAY_IT_FORWARD_SLUG } from "@/lib/pay-it-forward";
 
 const STORAGE_KEY = "sherred-cart-v1";
 
@@ -28,6 +29,7 @@ interface CartContextValue {
   ) => void;
   setQty: (slug: string, qty: number) => void;
   remove: (slug: string) => void;
+  setContribution: (cents: number) => void;
   clear: () => void;
 }
 
@@ -44,6 +46,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const parsed = JSON.parse(raw);
+        // One-time hydration from localStorage (client-only external read).
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         if (Array.isArray(parsed)) setLines(parsed);
       }
     } catch {
@@ -109,6 +113,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     []
   );
 
+  // A Pay It Forward contribution rides in the basket as a single special line
+  // (crest image, chosen amount, qty 1). Setting it replaces any existing one; 0
+  // removes it. It's peeled back out at checkout and sent as the contribution.
+  const setContribution = useCallback((cents: number) => {
+    setLines((prev) => {
+      const others = prev.filter((l) => l.slug !== PAY_IT_FORWARD_SLUG);
+      if (cents <= 0) return others;
+      return [
+        ...others,
+        { slug: PAY_IT_FORWARD_SLUG, name: "Pay It Forward", priceCents: cents, image: "/brand/crest.png", qty: 1 },
+      ];
+    });
+  }, []);
+
   const clear = useCallback(() => setLines([]), []);
 
   const count = useMemo(() => lines.reduce((n, l) => n + l.qty, 0), [lines]);
@@ -130,9 +148,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       addLine,
       setQty,
       remove,
+      setContribution,
       clear,
     }),
-    [lines, count, subtotalCents, isOpen, hydrated, add, addLine, setQty, remove, clear]
+    [lines, count, subtotalCents, isOpen, hydrated, add, addLine, setQty, remove, setContribution, clear]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

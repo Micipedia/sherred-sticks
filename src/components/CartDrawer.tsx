@@ -6,6 +6,7 @@ import { useCart } from "./CartProvider";
 import { asset } from "@/lib/asset";
 import { IconClose, IconMinus, IconPlus, IconTrash } from "./Icons";
 import { formatPrice } from "@/lib/product-helpers";
+import { PAY_IT_FORWARD_SLUG } from "@/lib/pay-it-forward";
 
 export default function CartDrawer() {
   const { lines, isOpen, close, setQty, remove, subtotalCents, count } = useCart();
@@ -77,53 +78,75 @@ export default function CartDrawer() {
           </div>
         ) : (
           <ul className="flex-1 divide-y divide-line overflow-y-auto px-5">
-            {lines.map((l) => (
-              <li key={l.slug} className="flex gap-4 py-4">
-                <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-ink">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={asset(l.image)} alt={l.name} className="h-full w-full object-cover" />
-                </div>
-                <div className="flex min-w-0 flex-1 flex-col">
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="truncate font-display text-sm text-parchment">{l.name}</p>
-                    <button
-                      type="button"
-                      onClick={() => remove(l.slug)}
-                      aria-label={`Remove ${l.name}`}
-                      className="shrink-0 text-muted transition-colors hover:text-oxblood"
-                    >
-                      <IconTrash className="h-4 w-4" />
-                    </button>
+            {lines.map((l) => {
+              const isPif = l.slug === PAY_IT_FORWARD_SLUG;
+              return (
+                <li key={l.slug} className="flex gap-4 py-4">
+                  <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-ink">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={asset(l.image)}
+                      alt={l.name}
+                      className={`h-full w-full ${isPif ? "object-contain p-2" : "object-cover"}`}
+                    />
                   </div>
-                  <div className="mt-auto flex items-center justify-between pt-2">
-                    <div className="flex items-center rounded-sm border border-line">
+                  <div className="flex min-w-0 flex-1 flex-col">
+                    <div className="flex items-start justify-between gap-2">
+                      <p className="truncate font-display text-sm text-parchment">{l.name}</p>
                       <button
                         type="button"
-                        onClick={() => setQty(l.slug, l.qty - 1)}
-                        aria-label="Decrease quantity"
-                        className="p-1.5 text-muted hover:text-parchment"
+                        onClick={() => remove(l.slug)}
+                        aria-label={`Remove ${l.name}`}
+                        className="shrink-0 text-muted transition-colors hover:text-oxblood"
                       >
-                        <IconMinus className="h-3.5 w-3.5" />
-                      </button>
-                      <span className="w-7 text-center text-sm tabular-nums text-parchment">
-                        {l.qty}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setQty(l.slug, l.qty + 1)}
-                        aria-label="Increase quantity"
-                        className="p-1.5 text-muted hover:text-parchment"
-                      >
-                        <IconPlus className="h-3.5 w-3.5" />
+                        <IconTrash className="h-4 w-4" />
                       </button>
                     </div>
-                    <span className="text-sm tabular-nums text-gold">
-                      {formatPrice(l.priceCents * l.qty)}
-                    </span>
+                    {isPif && (
+                      <p className="mt-0.5 text-xs text-muted">
+                        Gift toward a stick for someone in need
+                      </p>
+                    )}
+                    <div className="mt-auto flex items-center justify-between pt-2">
+                      {isPif ? (
+                        <Link
+                          href="/pay-it-forward"
+                          onClick={close}
+                          className="font-display text-[0.7rem] uppercase tracking-[0.14em] text-muted hover:text-gold"
+                        >
+                          Change amount
+                        </Link>
+                      ) : (
+                        <div className="flex items-center rounded-sm border border-line">
+                          <button
+                            type="button"
+                            onClick={() => setQty(l.slug, l.qty - 1)}
+                            aria-label="Decrease quantity"
+                            className="p-1.5 text-muted hover:text-parchment"
+                          >
+                            <IconMinus className="h-3.5 w-3.5" />
+                          </button>
+                          <span className="w-7 text-center text-sm tabular-nums text-parchment">
+                            {l.qty}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setQty(l.slug, l.qty + 1)}
+                            aria-label="Increase quantity"
+                            className="p-1.5 text-muted hover:text-parchment"
+                          >
+                            <IconPlus className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      )}
+                      <span className="text-sm tabular-nums text-gold">
+                        {formatPrice(l.priceCents * l.qty)}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         )}
 
@@ -137,9 +160,11 @@ export default function CartDrawer() {
                 {formatPrice(subtotalCents)}
               </span>
             </div>
-            <p className="mb-4 text-xs text-muted">
-              Shipping calculated at checkout.
-            </p>
+            {lines.some((l) => l.slug !== PAY_IT_FORWARD_SLUG) && (
+              <p className="mb-4 text-xs text-muted">
+                Shipping calculated at checkout.
+              </p>
+            )}
             <Link
               href="/checkout"
               onClick={close}

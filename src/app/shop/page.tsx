@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import PayItForwardCard from "@/components/PayItForwardCard";
 import CelticDivider from "@/components/CelticDivider";
 import { IconArrow } from "@/components/Icons";
 import { CATEGORIES, productsByCategory } from "@/lib/products";
@@ -38,7 +39,7 @@ export default function ShopPage() {
       </nav>
 
       <div className="space-y-16">
-        {CATEGORIES.map((c) => (
+        {CATEGORIES.map((c, i) => (
           <section key={c.slug} id={c.slug} className="scroll-mt-24">
             <div className="flex items-end justify-between gap-4">
               <div>
@@ -57,6 +58,8 @@ export default function ShopPage() {
               {productsByCategory(c.slug).map((p) => (
                 <ProductCard key={p.slug} product={p} />
               ))}
+              {/* One Pay It Forward tile in the collection (first family). */}
+              {i === 0 && <PayItForwardCard />}
             </div>
           </section>
         ))}

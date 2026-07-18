@@ -53,3 +53,10 @@ export const payItForward = {
 } as const;
 
 export type PayItForward = typeof payItForward;
+
+// Reserved cart-line slug for a Pay It Forward contribution. It is NOT a real
+// product (never in store.json) — the checkout peels this line out of the basket
+// and sends its amount to the Worker as the contribution, so it's bounds-checked
+// rather than price-looked-up. Keep this in sync with the Worker's contribution
+// handling.
+export const PAY_IT_FORWARD_SLUG = "pay-it-forward";

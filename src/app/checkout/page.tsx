@@ -7,8 +7,7 @@ import { asset } from "@/lib/asset";
 import { formatPrice } from "@/lib/product-helpers";
 import { COUNTRIES, shippingCentsForCountry, shippingLabelForCountry } from "@/lib/shipping";
 import { btnGhost, btnPrimary } from "@/lib/ui";
-import ContributionPicker from "@/components/ContributionPicker";
-import { payItForward } from "@/lib/pay-it-forward";
+import { PAY_IT_FORWARD_SLUG } from "@/lib/pay-it-forward";
 
 const CHECKOUT_URL = process.env.NEXT_PUBLIC_CHECKOUT_URL;
 
@@ -17,9 +16,17 @@ export default function CheckoutPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [country, setCountry] = useState("GB");
-  const [contributionCents, setContributionCents] = useState(0);
-  const deliveryCents = shippingCentsForCountry(country);
-  const totalCents = subtotalCents + deliveryCents + contributionCents;
+
+  // A Pay It Forward contribution rides in the basket as a special line. Peel it
+  // out: real sticks go to the Worker as items (trusted prices), the contribution
+  // goes as its own bounds-checked amount, and shipping only applies to sticks.
+  const pifLine = lines.find((l) => l.slug === PAY_IT_FORWARD_SLUG);
+  const stickLines = lines.filter((l) => l.slug !== PAY_IT_FORWARD_SLUG);
+  const contributionCents = pifLine?.priceCents ?? 0;
+  const hasSticks = stickLines.length > 0;
+
+  const deliveryCents = hasSticks ? shippingCentsForCountry(country) : 0;
+  const totalCents = subtotalCents + deliveryCents;
 
   async function pay() {
     if (!CHECKOUT_URL) {
@@ -33,7 +40,7 @@ export default function CheckoutPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          items: lines.map((l) => ({ slug: l.slug, qty: l.qty })),
+          items: stickLines.map((l) => ({ slug: l.slug, qty: l.qty })),
           country,
           contributionCents,
         }),
@@ -59,7 +66,7 @@ export default function CheckoutPage() {
     return (
       <div className="container-page flex flex-col items-center py-28 text-center">
         <h1 className="font-display text-3xl text-parchment">Your basket is empty</h1>
-        <p className="mt-4 text-muted">Add a stick or two and come back.</p>
+        <p className="mt-4 text-muted">Add a stick — or a Pay It Forward gift — and come back.</p>
         <Link href="/shop" className={`${btnPrimary} mt-8`}>
           Browse the collection
         </Link>
@@ -77,68 +84,57 @@ export default function CheckoutPage() {
       <div className="mx-auto mt-10 max-w-2xl">
         {/* Order summary */}
         <ul className="divide-y divide-line rounded-sm border border-line">
-          {lines.map((l) => (
-            <li key={l.slug} className="flex items-center gap-4 p-4">
-              <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-ink">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={asset(l.image)} alt={l.name} className="h-full w-full object-cover" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate font-display text-parchment">{l.name}</p>
-                <p className="text-sm text-muted">Qty {l.qty}</p>
-              </div>
-              <span className="tabular-nums text-gold">
-                {formatPrice(l.priceCents * l.qty)}
-              </span>
-            </li>
-          ))}
+          {lines.map((l) => {
+            const isPif = l.slug === PAY_IT_FORWARD_SLUG;
+            return (
+              <li key={l.slug} className="flex items-center gap-4 p-4">
+                <div className="h-20 w-16 shrink-0 overflow-hidden rounded-sm border border-line bg-ink">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={asset(l.image)}
+                    alt={l.name}
+                    className={`h-full w-full ${isPif ? "object-contain p-2" : "object-cover"}`}
+                  />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-display text-parchment">{l.name}</p>
+                  <p className="text-sm text-muted">
+                    {isPif ? "Gift toward a stick for someone in need" : `Qty ${l.qty}`}
+                  </p>
+                </div>
+                <span className="tabular-nums text-gold">
+                  {formatPrice(l.priceCents * l.qty)}
+                </span>
+              </li>
+            );
+          })}
         </ul>
 
-        {/* Destination — sets the delivery charge before the payment page */}
-        <div className="mt-6 border-t border-line pt-6">
-          <label
-            htmlFor="ship-country"
-            className="block font-display text-sm uppercase tracking-[0.12em] text-parchment"
-          >
-            Shipping to
-          </label>
-          <select
-            id="ship-country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            className="mt-2 w-full rounded-sm border border-line bg-ink px-3 py-2 text-parchment focus:border-gold focus:outline-none"
-          >
-            {COUNTRIES.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-          <p className="mt-2 text-xs text-muted">
-            Sticks post from Wiltshire, England. Delivery is a flat rate per order for your
-            destination; you&apos;ll confirm your address on the secure payment page.
-          </p>
-        </div>
-
-        {/* Pay It Forward — optional contribution toward a stick we gift, free, to
-            someone who can't afford one. Strictly opt-in; nothing pre-selected. */}
-        {payItForward.enabled && (
-          <div className="mt-6 rounded-sm border border-gold/30 bg-gold/5 p-5">
-            <p className="font-display text-sm uppercase tracking-[0.12em] text-parchment">
-              Pay It Forward <span className="text-muted">(optional)</span>
+        {/* Destination — only when there are sticks to post. */}
+        {hasSticks && (
+          <div className="mt-6 border-t border-line pt-6">
+            <label
+              htmlFor="ship-country"
+              className="block font-display text-sm uppercase tracking-[0.12em] text-parchment"
+            >
+              Shipping to
+            </label>
+            <select
+              id="ship-country"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className="mt-2 w-full rounded-sm border border-line bg-ink px-3 py-2 text-parchment focus:border-gold focus:outline-none"
+            >
+              {COUNTRIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+            <p className="mt-2 text-xs text-muted">
+              Sticks post from Wiltshire, England. Delivery is a flat rate per order for your
+              destination; you&apos;ll confirm your address on the secure payment page.
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-parchment-dim">
-              Add a little toward a handmade stick we give, free, to someone who
-              can&apos;t afford one — handed out through our free monthly draw.
-              Every penny goes to sticks.
-            </p>
-            <div className="mt-4">
-              <ContributionPicker
-                valueCents={contributionCents}
-                onChange={setContributionCents}
-                idPrefix="pif-checkout"
-              />
-            </div>
           </div>
         )}
 
@@ -148,14 +144,10 @@ export default function CheckoutPage() {
             <dt>Subtotal ({count})</dt>
             <dd className="tabular-nums text-gold">{formatPrice(subtotalCents)}</dd>
           </div>
-          <div className="flex items-center justify-between text-parchment">
-            <dt>{shippingLabelForCountry(country)}</dt>
-            <dd className="tabular-nums text-gold">{formatPrice(deliveryCents)}</dd>
-          </div>
-          {contributionCents > 0 && (
+          {hasSticks && (
             <div className="flex items-center justify-between text-parchment">
-              <dt>Pay It Forward</dt>
-              <dd className="tabular-nums text-gold">{formatPrice(contributionCents)}</dd>
+              <dt>{shippingLabelForCountry(country)}</dt>
+              <dd className="tabular-nums text-gold">{formatPrice(deliveryCents)}</dd>
             </div>
           )}
           <div className="flex items-center justify-between border-t border-line pt-3">

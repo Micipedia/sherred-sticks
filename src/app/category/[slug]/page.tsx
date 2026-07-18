@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import PayItForwardCard from "@/components/PayItForwardCard";
 import CelticDivider from "@/components/CelticDivider";
 import { CATEGORIES, getCategory, productsByCategory } from "@/lib/products";
 
@@ -58,6 +59,7 @@ export default async function CategoryPage({
         {products.map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}
+        <PayItForwardCard />
       </div>
     </div>
   );
