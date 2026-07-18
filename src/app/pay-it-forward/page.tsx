@@ -88,7 +88,7 @@ export default function PayItForwardPage() {
           </a>
         ) : (
           <p className="mt-6 text-sm text-muted">
-            Registration opens when the shop launches.
+            The free draw opens for registration soon — check back shortly.
           </p>
         )}
       </section>

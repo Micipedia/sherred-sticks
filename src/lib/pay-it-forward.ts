@@ -47,8 +47,8 @@ export const payItForward = {
   maxCents: 100000, // £1,000
 
   // Where people in financial hardship register for the FREE monthly draw. Steve
-  // runs this on his Facebook page — paste the post/page link here at go-live. If
-  // empty, the page shows "registration opens when the shop launches".
+  // runs this on his Facebook page — paste the post/page link here. While empty,
+  // the page shows a "draw opens for registration soon" note instead of a button.
   registerUrl: "",
 } as const;
 

@@ -40,7 +40,7 @@ export default function ContributeBox() {
   if (!payItForward.enabled || !payItForward.endpoint) {
     return (
       <div className="rounded-sm border border-line bg-ink p-6 text-center text-muted">
-        Pay It Forward opens when the shop launches.
+        Pay It Forward is temporarily unavailable.
       </div>
     );
   }

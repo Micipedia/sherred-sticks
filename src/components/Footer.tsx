@@ -109,8 +109,8 @@ export default function Footer() {
       <div className="border-t border-line">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-center text-xs text-muted sm:flex-row sm:text-left">
           <p>&copy; {year} Sherred &amp; Sons Walking Sticks.</p>
-          <p className="text-gold/70">
-            Preview site &middot; sample products &mdash; no orders are taken yet.
+          <p className="text-muted">
+            Handmade to order in Wiltshire, England.
           </p>
         </div>
       </div>
